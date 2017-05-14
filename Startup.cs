@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Vue2Spa.Data;
 
 namespace Vue2Spa
 {
@@ -28,6 +30,14 @@ namespace Vue2Spa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // services.AddEntityFrameworkSqlite()
+            //     .AddDbContext<EdionContext>((provider, options) =>
+            //     {
+            //         options.UseSqlite("Data Source=edion.db").UseInternalServiceProvider(provider);
+            //     });
+            services.AddDbContext<EdionContext>(options => options.UseSqlite("Data Source=edion.db"));
+
             // Add framework services.
             services.AddMvc();
         }
