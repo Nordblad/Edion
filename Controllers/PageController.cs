@@ -15,17 +15,30 @@ namespace Vue2Spa.Controllers
         public PageController(EdionContext context) {
             _context = context;
         }
-        [HttpGet("[action]")]
+        [HttpGet]
         public IEnumerable<Page> Get()
         {
             return _context.Pages.ToList();
-            // return new List<Page>() {
-            //     new Page() {
-            //         PageId = 1,
-            //         Name = "Heeej",
-            //         Rows = null
-            //     }
-            // };
+        }
+
+        [HttpPost]
+        public object Post([FromBody]NewPageModel model) {
+            var page = new Page {
+                Name = model.Name,
+                Created = DateTime.Now
+            };
+            _context.Pages.Add(page);
+            _context.SaveChanges();
+            return new {
+                Success = true,
+                Id = page.PageId
+            };
         }
     }
+
+    public class NewPageModel
+    {
+        public string Name { get; set; }
+    }
+
 }

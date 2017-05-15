@@ -1,31 +1,4 @@
-﻿<template>
-    <!--<div class="main-nav">
-                                                <div class="navbar navbar-inverse">
-                                                    <div class="navbar-header">
-                                                        <button type="button"
-                                                                class="navbar-toggle"
-                                                                data-toggle="collapse"
-                                                                data-target=".navbar-collapse">
-                                                            <span class="sr-only">Toggle navigation</span>
-                                                            <span class="icon-bar"></span>
-                                                            <span class="icon-bar"></span>
-                                                            <span class="icon-bar"></span>
-                                                        </button>
-                                                        <a class="navbar-brand"
-                                                           href="/">Vue2Spa</a>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="navbar-collapse collapse">
-                                                        <ul class="nav navbar-nav">
-                                                            <li v-for="route in routes">
-                                                                <router-link :to="route.path">
-                                                                    <span :class="route.style"></span> {{ route.display }}
-                                                                </router-link>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>-->
+<template>
     <nav class="nav has-shadow">
         <div class="nav-left nav-menu">
             <!--<a class="nav-item">
@@ -35,10 +8,8 @@
                 <div class="field is-grouped">
                     <p class="control">
                         <span class="select">
-                            <select v-model="selectedPage" @change="test()">
-                                <!--<option>Select dropdown</option>
-                                            <option>With options</option>-->
-                                <option v-for="page in pages" :value="page.pageId">{{ page.name }}</option>
+                            <select @change="test()">
+                                <option v-for="page in pages" :value="page.pageId" :selected="selectedPageId == page.pageId">{{ page.name }}</option>
                             </select>
                         </span>
                     </p>
@@ -121,24 +92,26 @@ export default {
     components: {
         ModalPage
     },
+    props: ['pages', 'selectedPageId'],
     data() {
         return {
             routes,
-            pages: [],
+            //pages: [],
             pageModalOpen: false,
             newPageName: 'New page',
-            selectedPage: null
+            selectedPage: null,
+            select: null
         }
     },
     created() {
-        this.selectedPage = this.id;
-        this.$http
-            .get('/api/Page')
-            .then(response => {
-                console.log('RECIEVED PAGE LIST!', response.data)
-                this.pages = response.data;
-            })
-            .catch((error) => console.log(error))
+         this.select = this.id;
+    //     this.$http
+    //         .get('/api/Page')
+    //         .then(response => {
+    //             console.log('RECIEVED PAGE LIST!', response.data)
+    //             this.pages = response.data;
+    //         })
+    //         .catch((error) => console.log(error))
     },
     methods: {
         newPage: function () {
@@ -158,6 +131,9 @@ export default {
         test: function (e) {
             console.log('TEST FIRED IN MENU', this.selectedPage);
         }
+    },
+    watch: {
+        'selectedPageId': function() { console.log('watch'); }
     }
 }
 </script>
