@@ -1,7 +1,17 @@
 <template>
-    <div id="app" class="container-fluid">
+    <div id="app"
+         class="container-fluid-TESSST">
+        <!--<div class="columns">
+                <div class="column">
+                    <router-view></router-view>
+                </div>
+                <div class="column is-3">
+                    <nav-menu params="route: route"></nav-menu>
+                </div>
+            </div>-->
         <nav-menu params="route: route"></nav-menu>
         <router-view></router-view>
+    </div>
     </div>
 </template>
 
@@ -26,4 +36,5 @@ export default {
 </script>
 
 <style>
+
 </style>
