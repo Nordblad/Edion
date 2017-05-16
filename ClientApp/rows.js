@@ -15,8 +15,13 @@ let rows = [
         translate: true
       },
       {
+        name: 'ImageDescription',
+        value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.<br><a>@bulmaio</a><br><small>Olov Nordblad</small>.',
+        translate: true
+      },
+      {
         name: 'Image',
-        value: 'example1.png'
+        value: 'example1.jpg'
       }
     ]
   }

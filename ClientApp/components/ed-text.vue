@@ -1,16 +1,15 @@
 <template>
     <div class="ed-text">
         <!-- Add paste etc -->
-        <div class="content ed-text-editor" contenteditable="true" @blur="saveField" @input="setEdited" v-html="value"></div>
-        <div class="card ed-text-buttons">
+        <div class="card ed-text-buttons" v-if="showToolbar">
             <div class="card-content">
                 <div class="field has-addons">
                     <p class="control">
-                    <a class="button">
-                        <span class="icon is-small">
-                            <i class="fa fa-bold"></i>
-                        </span>
-                    </a>
+                        <a class="button">
+                            <span class="icon is-small">
+                                <i class="fa fa-bold"></i>
+                            </span>
+                        </a>
                     </p>
                     <p class="control">
                         <a class="button">
@@ -29,12 +28,18 @@
                 </div>
             </div>
         </div>
+        <div class="content ed-text-editor" contenteditable="true" @blur="saveField" @input="setEdited" v-html="value" @focus="openToolbar"></div>
     </div>
 </template>
 
 <script>
+import EdButtonBar from './ed-button-bar'
+
 export default {
   name: 'ed-text',
+  components: {
+      EdButtonBar
+  },
 //   model: {
 //     prop: 'field',
 //     event: 'bajs'
@@ -43,7 +48,8 @@ export default {
   data () {
     return {
       edited: false,
-      fieldName: ''
+      fieldName: '',
+      showToolbar: false
     }
   },
   created() {
@@ -53,6 +59,10 @@ export default {
   computed: {
   },
   methods: {
+      openToolbar(e) {
+        console.log('Open the toolbar, dear');
+        this.showToolbar = true;
+      },
       saveField(e) {
           let val = e.target.innerHTML;
           //console.log('savefield triggered in ed-text');
@@ -60,13 +70,18 @@ export default {
         //   console.log('====', t);
           console.log('blur val:', val);
           //this.field2 = val;
+          this.showToolbar = false;
           this.$emit('input', val);
-          //this.$store.dispatch();
+          this.$store.dispatch('changeField', {
+              value: val,
+              
+          });
       },
       setEdited(e) {
           //console.log('edited e', e.target.innerHTML);
           if (!this.edited) {
             this.edited = true;
+            this.$store.commit('increment', 'something');
             //console.log('Set edited')
           }
       }
@@ -91,9 +106,9 @@ export default {
     bottom: -3.5rem;
 }
 
-.ed-text-editor:not(:focus)+.ed-text-buttons {
+/*.ed-text-editor:not(:focus)+.ed-text-buttons {
     display: none;
-}
+}*/
 
 .ed-text-buttons .card-content {
     padding: 0.5rem;

@@ -1,6 +1,6 @@
 <template>
   <div class="page-editor">
-    <ed-topbar :pages="pages" :selectedPageId="id">
+    <ed-topbar :pages="pages" :selectedPageId="id" @newPageCreated="getPages">
       <language-tabs slot="center" :language="languageCode" :pageId="id" />
     </ed-topbar>
   
@@ -13,15 +13,17 @@
         </div>
       </div>
     </div>
+
+    <div class="notification is-danger">
+      Pending Changes: {{ $store.state.changes.length }}
+    </div>
   
     <div class="ed-page" :data-page-id="id">
-      <!--<div class="notification is-danger" v-if="rows.length == 0">
-          The page is empty, click below to add a row!
-        </div>-->
-      <component v-for="row in rows" :is="row.type" :languageId="languageId" :rowId="row.id" :fields="row.fields">
-      </component>
-      <button @click="openRowPicker()">Add row</button>
-      {{ languageId }}
+      <component v-for="row in rows" :is="row.type" :languageId="languageId" :rowId="row.id" :fields="row.fields"></component>
+
+      <div class="container">
+        <button class="button is-info is-fullwidth" @click="openRowPicker()">Add row</button>
+      </div>
     </div>
   </div>
 </template>
@@ -86,7 +88,10 @@ export default {
           //   }
           // ]
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          console.log(error);
+          //this.$router.push({ name: 'home' });
+        });
     },
     openRowPicker: function () {
       console.log('Open row picker!');

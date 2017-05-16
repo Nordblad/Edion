@@ -1,20 +1,20 @@
 <template>
     <nav class="nav has-shadow">
-        <div class="nav-left nav-menu">
+        <div class="nav-left">
             <!--<a class="nav-item">
                                         <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
                                     </a>-->
             <div class="nav-item">
-                <div class="field is-grouped">
+                <div class="field has-addons">
                     <p class="control">
                         <span class="select">
-                            <select @change="test">
+                            <select @change="test" style="min-width: 180px">
                                 <option v-for="page in pages" :value="page.pageId" :selected="selectedPageId == page.pageId">{{ page.name }}</option>
                             </select>
                         </span>
                     </p>
                     <p class="control">
-                        <a class="button is-secondary" @click="newPage()">
+                        <a class="button is-secondary" @click="newPage">
                             <span class="icon">
                                 <i class="fa fa-plus"></i>
                             </span>
@@ -25,7 +25,7 @@
         </div>
     
         <!-- NEW PAGE MODAL -->
-        <ed-modal v-if="pageModalOpen" @ok="createPage()" @cancel="pageModalOpen = false" okButton="Create page">
+        <ed-modal v-if="pageModalOpen" @ok="createPage" @cancel="pageModalOpen = false" okButton="Create page" title="New page">
             <div class="field">
                 <label class="label">Page name</label>
                 <p class="control">
@@ -48,21 +48,11 @@
     
         <!-- This "nav-menu" is hidden on mobile -->
         <!-- Add the modifier "is-active" to display it on mobile -->
-        <div class="nav-right nav-menu">
-            <!--<a class="nav-item">
-                                            Home
-                                        </a>
-                                        <a class="nav-item">
-                                            Documentation
-                                        </a>
-                                        <a class="nav-item">
-                                            Blog
-                                        </a>-->
-    
+        <div class="nav-right">    
             <div class="nav-item">
-                <div class="field is-grouped">
+                <div class="field">
                     <p class="control">
-                        <a class="button is-primary">
+                        <a :class="{ button: true, 'is-primary': true, 'is-disabled': !canSave }">
                             <span class="icon">
                                 <i class="fa fa-save"></i>
                             </span>
@@ -104,6 +94,11 @@ export default {
         //         })
         //         .catch((error) => console.log(error))
     },
+    computed: {
+        canSave: function() {
+            return this.$store.state.changes.length > 0
+        }
+    },
     methods: {
         newPage: function () {
             this.pageModalOpen = true;
@@ -115,7 +110,8 @@ export default {
                 .post('/api/Page', { name: this.newPageName })
                 .then(response => {
                     console.log('RECIEVED:', response.data);
-                    this.$router.push({ name: 'page', params: { id: response.data.id, language: 'EN' } })
+                    this.$router.push({ name: 'page', params: { id: response.data.id, language: 'EN' } });
+                    this.$emit('newPageCreated', 'test');
                 })
                 .catch((error) => console.log(error))
         },

@@ -1,13 +1,11 @@
 <template>
-    <div class="section">
+    <div class="section ed-row">
+        <a class="ed-delete-row delete is-medium"></a>
         <div class="container">
             <div class="columns">
                 <div class="column is-two-thirds">
-                    <div class="notification is-primary">
-                        <!--<textarea v-model="testText" @blur="test()"></textarea>
-                            <br>-->
+                    <div class="notification ">
                         {{ leftText }}
-                        <!--<input type="text" v-model="leftText"/>-->
                         <br>
                         <ed-text v-model="leftText" :languageId="languageId" />
                     </div>
@@ -15,17 +13,10 @@
                 <div class="column">
                     <div class="card">
                         <div class="card-image">
-                                <ed-image v-model="image" size="4by3" />
+                            <ed-image v-model="image" size="4by3" />
                         </div>
                         <div class="card-content">
-                            <div class="content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                                <a>@bulmaio</a>.
-                                <a>#css</a>
-                                <a>#responsive</a>
-                                <br>
-                                <small>11:09 PM - 1 Jan 2016</small>
-                            </div>
+                            <ed-text v-model="imageDescription" />
                         </div>
                     </div>
                 </div>
@@ -49,6 +40,7 @@ export default {
         return {
             msg: 'Welcome to row-simple',
             leftText: this.fields.leftText,
+            imageDescription: this.fields.imageDescription,
             image: this.fields.image,
             //testText: this.fields.leftText,
             maybeThisWay: {
@@ -92,16 +84,28 @@ export default {
         fields: function (newValue) {
             console.log('fields changed');
             this.leftText = newValue.leftText;
+            this.imageDescription = newValue.imageDescription;
             this.image = newValue.image;
         },
         //   leftText: function(newVal) {
         //       console.log('LeftText changed')
         //       //console.log('Row: ' + this.rowId + ', field: ' + this.f)
         //   },
+    },
+    created() {
+        console.log('Created!', this.fields);
+
     }
 }
 </script>
 
 <style>
-
+.ed-row {
+    position: relative;
+}
+.ed-delete-row {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+}
 </style>

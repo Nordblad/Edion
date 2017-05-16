@@ -1,17 +1,23 @@
 <template>
     <div class="modal is-active">
         <div class="modal-background" @click="cancel"></div>
-        <div class="modal-card">
-            <header class="modal-card-head" v-if="title">
+        <div :class="card ? 'modal-card' : 'modal-content is-extra-wide'">
+            <header class="modal-card-head" v-if="card">
                 <p class="modal-card-title">{{ title }}</p>
                 <button class="delete" @click="cancel"></button>
             </header>
-            <section class="modal-card-body">
+    
+            <div :class="card ? 'modal-card-body' : 'box'">
                 <slot></slot>
-            </section>
-            <footer class="modal-card-foot">
+            </div>
+    
+            <!--<section class="modal-card-body" v-if="card">
+                    <slot></slot>
+                </section>
+                <slot v-else></slot>-->
+            <footer class="modal-card-foot" v-if="card">
                 <a class="button is-success" @click="ok">{{ okButton }}</a>
-                <a class="button" @click="cancel">{{ cancelButton }}</a>
+                <a class="button is-outline" @click="cancel">{{ cancelButton }}</a>
             </footer>
         </div>
     </div>
@@ -31,6 +37,9 @@ export default {
       },
       cancelButton: {
           default: 'Cancel'
+      },
+      card: {
+          default: true
       }
   },
   data () {
@@ -52,5 +61,13 @@ export default {
 </script>
 
 <style>
+.box.is-transparent {
+    background-color: transparent;
+}
 
+@media screen and (min-width: 1024px) {
+    .modal-content {
+        width: 824px;
+    }
+}
 </style>
