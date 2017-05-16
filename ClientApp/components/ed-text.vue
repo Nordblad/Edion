@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="content ed-text-editor" contenteditable="true" @blur="saveField" @input="setEdited" v-html="value" @focus="openToolbar"></div>
+        <div class="content ed-text-editor" contenteditable="true" @blur="onFocusLost" @input="setEdited" v-html="value" @focus="openToolbar"></div>
     </div>
 </template>
 
@@ -63,18 +63,19 @@ export default {
         console.log('Open the toolbar, dear');
         this.showToolbar = true;
       },
-      saveField(e) {
+      onFocusLost(e) {
+          this.showToolbar = false;
+          if (!this.edited) { return }
           let val = e.target.innerHTML;
-          //console.log('savefield triggered in ed-text');
+          //console.log('onFocusLost triggered in ed-text');
         //   var t = this.$vnode.data.model.expression;
         //   console.log('====', t);
           console.log('blur val:', val);
           //this.field2 = val;
-          this.showToolbar = false;
           this.$emit('input', val);
           this.$store.dispatch('changeField', {
               value: val,
-              
+
           });
       },
       setEdited(e) {

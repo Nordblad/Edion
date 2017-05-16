@@ -22,7 +22,7 @@
       <component v-for="row in rows" :is="row.type" :languageId="languageId" :rowId="row.id" :fields="row.fields"></component>
 
       <div class="container">
-        <button class="button is-info is-fullwidth" @click="openRowPicker()">Add row</button>
+        <button class="button is-info is-outlined is-fullwidth" @click="openRowPicker()">Add row</button>
       </div>
     </div>
   </div>
@@ -95,17 +95,24 @@ export default {
     },
     openRowPicker: function () {
       console.log('Open row picker!');
-      //console.log(Rows)
-      var row = Rows[0];
-      console.log(row);
+      var row = {
+        id: -1,
+        type: 'row-simple',
+        fields3: {},
+        sortOrder: this.rows.length
+      }
+      this.rows.push(row);
+      console.log('new row:', row)
+      // var row = Rows[0];
+      // console.log(row);
 
-      this.$http
-        .post('/api/Row', { pageId: this.id, type: row.type, fields: row.fields })
-        .then(response => {
-          console.log('RECIEVED THE ADDED ROW', response.data)
-          this.rows.push(response.data);
-        })
-        .catch((error) => console.log(error))
+      // this.$http
+      //   .post('/api/Row', { pageId: this.id, type: row.type, fields: row.fields })
+      //   .then(response => {
+      //     console.log('RECIEVED THE ADDED ROW', response.data)
+      //     this.rows.push(response.data);
+      //   })
+      //   .catch((error) => console.log(error))
     }
     //   for (var prop in row.fields) {
     //     if (!row.fields.hasOwnProperty(prop)) {
