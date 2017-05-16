@@ -29,6 +29,8 @@ namespace Vue2Spa.Controllers
                 Type = "simple-row"
             };
             _context.Rows.Add(row);
+
+            
             _context.SaveChanges();
             return "Det ska ha sparats - POST";
         // public int RowId { get; set; }
@@ -47,6 +49,10 @@ namespace Vue2Spa.Controllers
         [HttpDelete]
         public string Delete()
         {
+            _context.Fields.RemoveRange(_context.Fields);
+            _context.Rows.RemoveRange(_context.Rows);
+            _context.Pages.RemoveRange(_context.Pages);
+            _context.SaveChanges();
             return "Delete!";
         }
 

@@ -115,7 +115,7 @@
 
 <script>
 import { routes } from '../routes'
-import ModalPage from './modal-page'
+import ModalPage from './ed-modal'
 
 export default {
     components: {
