@@ -3,10 +3,9 @@
     <ed-button-bar pos="topleft">
       <figure class="image is-4by3" slot="content">
         <transition name="slide-fade">
-          <img :src="getImagePath(test2)" :alt="value" :key="value" />
+          <img :src="getImagePath(imageUrl)" :alt="imageUrl" :key="imageUrl" />
         </transition>
       </figure>
-      <h5>{{ test2 }}</h5>
       <a class="button" slot="buttons" @click="openImagePicker">
         <span class="icon">
           <i class="fa fa-image"></i>
@@ -17,22 +16,12 @@
     <ed-modal v-if="imagePickerOpen" @cancel="imagePickerOpen = false" :card="false">
       <div class="columns" v-for="row in splitIntoRows(images, 3)">
         <div class="column" v-for="image in row">
-          <!--<div class="box">
-                                                                <figure class="image is-4by3" slot="content">
-                                                                    <img :src="getImagePath(image)" :alt="value" />
-                                                                </figure>
-                                                            </div>-->
-          <div :class="image == value ? 'card ed-imagepicker-card is-selected' : 'card ed-imagepicker-card'" @click="changeToImage(image)">
+          <div :class="image == imageUrl ? 'card ed-imagepicker-card is-selected' : 'card ed-imagepicker-card'" @click="changeToImage(image)">
             <div class="card-image">
               <figure class="image is-4by3">
-                <img :src="getImagePath(image)" :alt="value" />
+                <img :src="getImagePath(image)" :alt="image" />
               </figure>
             </div>
-            <!--<div class="card-content">
-                                                                <div class="content">
-                                                                    <small>{{ image }}</small>
-                                                                </div>
-                                                            </div>-->
           </div>
         </div>
       </div>
@@ -56,69 +45,49 @@
 import EdButtonBar from './ed-button-bar'
 import EdModal from './ed-modal'
 import { mapMutations } from 'vuex'
+import FieldMixin from '../edion/field-mixin'
 
 
 let images = Array.from(new Array(9), (x,i) => 'example' + (i+1) + '.jpg');
 
 export default {
   name: 'ed-image',
+  mixins: [FieldMixin],
   components: {
       EdButtonBar,
       EdModal
   },
-  props: ['value', 'rowId', 'size'],
+  props: ['size'],
   data () {
     return {
       imagePickerOpen: false,
       images,
-      fieldName: this.$vnode.data.model.expression
+      translate: false
     }
   },
   computed: {
-      currentSrc: function() {
-          return this.value[0];
-      },
-      test2: function() {
-        return this.$store.state.rows[this.rowId].fields[0];
+      imageUrl() {
+        return this.stateFields[0]
       }
   },
-  mounted() {
-      if (!this.test2) {
-          console.log('Ed-image has no field! create it!');
-          this.saveFieldValue({
-                name: this.fieldName,
-                languageId: 0,
-                rowId: this.rowId,
-                value: this.default
-            });
-            // this.$store.commit('EDIT_FIELD', {
-            //     name: this.fieldName,
-            //     languageId: 0,
-            //     rowId: this.rowId,
-            //     value: this.default
-            // });
-      }
-  },
+  inject: [ 'bajs' ],
+  mounted() { console.log('SHOULD BE POOP:', this.bajs) },
+  
   methods: {
     //...mapMutations(['saveStateTest']),
-    saveFieldValue(field) {
-      console.log('Save image value');
-      this.$store.commit('EDIT_FIELD', field);
-    },
-    // saveStateTest() {
-    //   console.log('I think image should saveStateTest() now')
-    // },
+
       openImagePicker() {
           this.imagePickerOpen = true;
       },
       changeToImage(newSrc) {
           console.log('Changing image to ' + newSrc);
+          this.editField({
+            rowId: this.rowId,
+            name: this.fieldName,
+            languageId: 0,
+            value: newSrc
+          });
           this.imagePickerOpen = false;
-          //this.$emit('input', newSrc);
-
-          //this.$emit('onFieldChange', { name: this.fieldName, languageId: 0, value: newSrc });
-
-          this.$store.commit()
       },
       getImagePath(fileName) {
           return '/dist/img/' + fileName;

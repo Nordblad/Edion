@@ -16,7 +16,15 @@ export default {
       languages: Languages
     }
   },
-  props: ['languageId', 'pageId']
+  computed: {
+    languageId() {
+      return this.$store.state.languageId;
+    },
+    pageId() {
+      return this.$route.params.id;
+    }
+  }
+  //props: ['languageId', 'pageId']
   // computed: {
   //   languageId: function () {
   //     return Languages[this.language.toLowerCase()].id

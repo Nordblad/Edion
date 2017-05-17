@@ -1,9 +1,9 @@
 <template>
-    <nav class="nav has-shadow">
+    <nav class="nav has-shadow ed-nav">
         <div class="nav-left">
             <!--<a class="nav-item">
-                                        <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
-                                    </a>-->
+                                            <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
+                                        </a>-->
             <div class="nav-item">
                 <div class="field has-addons">
                     <p class="control">
@@ -41,18 +41,18 @@
         <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
         <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
         <!--<span class="nav-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>-->
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>-->
     
         <!-- This "nav-menu" is hidden on mobile -->
         <!-- Add the modifier "is-active" to display it on mobile -->
-        <div class="nav-right">    
+        <div class="nav-right">
             <div class="nav-item">
                 <div class="field">
                     <p class="control">
-                        <a :class="{ button: true, 'is-primary': true, 'is-disabled': !canSave }" :disabled="!canSave" @click="save">
+                        <a :class="{ button: true, 'is-primary': true, 'is-disabled': !canSave, 'is-loading': isSaving }" :disabled="!canSave" @click="save">
                             <span class="icon">
                                 <i class="fa fa-save"></i>
                             </span>
@@ -86,7 +86,7 @@ export default {
         }
     },
     computed: {
-        canSave: function() {
+        canSave: function () {
             return this.$store.state.changedRows.length > 0 || this.$store.state.changedFields.length > 0
         }
     },
@@ -109,13 +109,13 @@ export default {
         navigateToPage: function (e) {
             this.$router.push({ name: 'page', params: { id: e.target.value, languageCode: this.$route.params.languageCode } })
         },
-        save: function() {
+        save: function () {
             this.isSaving = true;
             var self = this;
             // var rows = this.$store.state.changedRows;
             // var fields = this.$store.state.changedFields;
             // console.log('SAVE VM:', { changes: { rows: rows, fields: fields }})
-            this.$store.dispatch('SAVE', { changedRows: this.$store.state.changedRows, changedFields: this.$store.state.changedFields }).then(() => self.isSaving = false );
+            this.$store.dispatch('SAVE', { changedRows: this.$store.state.changedRows, changedFields: this.$store.state.changedFields }).then(() => self.isSaving = false);
         }
     },
     watch: {
@@ -126,6 +126,11 @@ export default {
 
 <style>
 .ed-nav {
-    background-color: #e6e6e6;
+    background-color: #232323;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
 }
 </style>

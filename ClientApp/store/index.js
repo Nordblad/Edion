@@ -23,7 +23,10 @@ const actions = {
     },
     SAVE: (state, changes) => {
         console.log('Saving!');
-        api.post('/api/row/', changes, (data) => console.log('SAVE RESPONSE: ', data));
+        api.post('/api/row/', changes, (data) => {
+            state.commit('CLEAR_CHANGED');
+            console.log('SAVE RESPONSE: ', data)
+        });
     }
 }
 
@@ -35,9 +38,19 @@ export default new Vuex.Store({
         changes: [],
         changedRows: [],
         changedFields: [],
-        rows: {}
+        rows: {},
+        languageId: 0,
+        selectedRow: 0
     },
     mutations: {
+        SELECT_ROW: (state, id) => {
+            console.log('Selecting row ' + id + '?')
+            state.selectedRow = id;
+        },
+        CHANGE_LANGUAGE: (state, languageCode) => {
+            state.languageId = Languages[languageCode.toLowerCase()].id;
+            console.log('Changed language to ' + languageCode + ', ' + Languages[languageCode.toLowerCase()].id);
+        },
         SET_PAGES: (state, data) => {
             state.pages = data;
             console.log('STORE: pages updated');
@@ -56,6 +69,10 @@ export default new Vuex.Store({
             Vue.set(state.rows, data.rowId, data);
             state.changedRows.push(data);
         },
+        DELETE_ROW: (state, rowId) => {
+            var r = state.rows[rowId];
+            Vue.delete(state.rows, rowId);
+        },
         EDIT_FIELD: (state, data) => {
             // if (!state.rows[data.rowId].fields) {
             //     console.log('tror inte man ska se det här')
@@ -63,24 +80,26 @@ export default new Vuex.Store({
             // }
             if (!state.rows[data.rowId].fields[data.name]) {
                 console.log('No ' + data.name + ' prop in fields, creating');
-                Vue.set(state.rows[data.rowId].fields, data.name, { });
+                Vue.set(state.rows[data.rowId].fields, data.name, {});
             }
 
             Vue.set(state.rows[data.rowId].fields[data.name], data.languageId, data.value)
-            
+
             console.log('Changed fields:', state.changedFields);
+            console.log('And rows:', state.changedRows);
 
             var cf = state.changedFields.find(x => x.rowId == data.rowId && x.name == data.name && x.languageId == data.languageId)
             if (cf) {
                 console.log('Fältet är redan redigerat', cf);
-                cf = data;
+                cf.value = data.value;
             } else {
                 console.log('Adding a field to changed...')
                 state.changedFields.push(data);
             }
         },
-        setLanguage(state, languageCode) {
-            state.languageId = Languages[this.languageCode.toLowerCase()].id;
+        CLEAR_CHANGED: (state) => {
+            state.changedFields = [];
+            state.changedRows = [];
         }
     }
 });

@@ -115,6 +115,7 @@ namespace Vue2Spa.Controllers
                         Type = row.Type
                     };
                     _context.Rows.Add(newRow);
+                    _context.SaveChanges();
 
                     foreach (var f in changes.ChangedFields.Where(x => x.RowId == temporaryId)) {
                         f.RowId = newRow.RowId;
@@ -123,7 +124,7 @@ namespace Vue2Spa.Controllers
             }
             foreach (var field in changes.ChangedFields)
             {
-                var f = _context.Fields.FirstOrDefault(x => x.Row.RowId == field.RowId && x.Name == field.Name && x.Language == field.Language);
+                var f = _context.Fields.FirstOrDefault(x => x.Row.RowId == field.RowId && x.Name == field.Name && x.Language == field.LanguageId);
                 if (f != null)
                 {
                     // The field exists, just update it
@@ -134,14 +135,14 @@ namespace Vue2Spa.Controllers
                     f = new Field() {
                         Row = _context.Rows.Find(field.RowId),
                         Name = field.Name,
-                        Language = field.Language,
+                        Language = field.LanguageId,
                         Value = field.Value
                     };
                     _context.Fields.Add(f);
                 }
             }
             _context.SaveChanges();
-            return Ok("verkar ha funkat?");
+            return Ok(changes);
         }
     }
 
@@ -177,7 +178,7 @@ namespace Vue2Spa.Controllers
         public string Name { get; set; }
         public string Value { get; set; }
         //public bool? Translate { get; set; } // Only used when creating new
-        public Language Language { get; set; }
+        public Language LanguageId { get; set; }
     }
 
     public class RowViewModel
