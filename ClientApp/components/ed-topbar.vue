@@ -8,8 +8,8 @@
                 <div class="field has-addons">
                     <p class="control">
                         <span class="select">
-                            <select @change="test" style="min-width: 180px">
-                                <option v-for="page in pages" :value="page.pageId" :selected="selectedPageId == page.pageId">{{ page.name }}</option>
+                            <select @change="navigateToPage" style="min-width: 180px">
+                                <option v-for="page in $store.state.pages" :value="page.pageId" :selected="selectedPageId == page.pageId">{{ page.name }}</option>
                             </select>
                         </span>
                     </p>
@@ -52,7 +52,7 @@
             <div class="nav-item">
                 <div class="field">
                     <p class="control">
-                        <a :class="{ button: true, 'is-primary': true, 'is-disabled': !canSave }">
+                        <a :class="{ button: true, 'is-primary': true, 'is-disabled': !canSave }" :disabled="!canSave" @click="save">
                             <span class="icon">
                                 <i class="fa fa-save"></i>
                             </span>
@@ -74,29 +74,20 @@ export default {
     components: {
         EdModal
     },
-    props: ['pages', 'selectedPageId', 'languageCode'],
+    props: ['selectedPageId'],
     data() {
         return {
             routes,
             pageModalOpen: false,
             newPageName: 'New page',
             selectedPage: null,
-            select: null
+            select: null,
+            isSaving: false
         }
-    },
-    created() {
-        //this.select = this.id;
-        //     this.$http
-        //         .get('/api/Page')
-        //         .then(response => {
-        //             console.log('RECIEVED PAGE LIST!', response.data)
-        //             this.pages = response.data;
-        //         })
-        //         .catch((error) => console.log(error))
     },
     computed: {
         canSave: function() {
-            return this.$store.state.changes.length > 0
+            return this.$store.state.changedRows.length > 0 || this.$store.state.changedFields.length > 0
         }
     },
     methods: {
@@ -110,14 +101,21 @@ export default {
                 .post('/api/Page', { name: this.newPageName })
                 .then(response => {
                     console.log('RECIEVED:', response.data);
-                    this.$router.push({ name: 'page', params: { id: response.data.id, language: 'EN' } });
+                    this.$router.push({ name: 'page', params: { id: response.data.id, languageCode: this.$route.params.languageCode } });
                     this.$emit('newPageCreated', 'test');
                 })
                 .catch((error) => console.log(error))
         },
-        test: function (e) {
-            console.log('TEST FIRED IN MENU', e.target.value, this.language);
-            this.$router.push({ name: 'page', params: { id: e.target.value, language: this.languageCode } })
+        navigateToPage: function (e) {
+            this.$router.push({ name: 'page', params: { id: e.target.value, languageCode: this.$route.params.languageCode } })
+        },
+        save: function() {
+            this.isSaving = true;
+            var self = this;
+            // var rows = this.$store.state.changedRows;
+            // var fields = this.$store.state.changedFields;
+            // console.log('SAVE VM:', { changes: { rows: rows, fields: fields }})
+            this.$store.dispatch('SAVE', { changedRows: this.$store.state.changedRows, changedFields: this.$store.state.changedFields }).then(() => self.isSaving = false );
         }
     },
     watch: {

@@ -1,14 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import api from './api'
+import Languages from '../languages'
 
 Vue.use(Vuex)
-
-const INITIAL_STATE = {
-    loggedIn: false,
-    loggedInUser: {},
-    //unsavedChanges: false,
-    changes: []
-};
 
 // Vue.directive('field', {
 //     bind: function (el, binding, vnode) {
@@ -19,15 +14,73 @@ const INITIAL_STATE = {
 //     }
 // });
 
+const actions = {
+    FETCH_ROWS: (state, pageId) => {
+        api.get('/api/row?pageId=' + pageId, rows => state.commit('SET_ROWS', rows));
+    },
+    FETCH_PAGES: (state) => {
+        api.get('/api/page/', pages => state.commit('SET_PAGES', pages));
+    },
+    SAVE: (state, changes) => {
+        console.log('Saving!');
+        api.post('/api/row/', changes, (data) => console.log('SAVE RESPONSE: ', data));
+    }
+}
+
 export default new Vuex.Store({
     //INITIAL_STATE,
+    actions,
     state: {
-        changes: []
+        pages: [],
+        changes: [],
+        changedRows: [],
+        changedFields: [],
+        rows: {}
     },
     mutations: {
-        increment(state, thing) {
-            // mutate state
-            state.changes.push(thing);
+        SET_PAGES: (state, data) => {
+            state.pages = data;
+            console.log('STORE: pages updated');
+        },
+        SET_ROWS: (state, data) => {
+            state.rows = data;
+            console.log('STORE: rows updated');
+        },
+
+        // increment(state, thing) {
+        //     // mutate state
+        //     state.changes.push(thing);
+        // },
+        ADD_ROW: (state, data) => {
+            console.log('STORE: add_row:', data);
+            Vue.set(state.rows, data.rowId, data);
+            state.changedRows.push(data);
+        },
+        EDIT_FIELD: (state, data) => {
+            // if (!state.rows[data.rowId].fields) {
+            //     console.log('tror inte man ska se det här')
+            //     Vue.set(state.rows[data.rowId], 'fields', { })
+            // }
+            if (!state.rows[data.rowId].fields[data.name]) {
+                console.log('No ' + data.name + ' prop in fields, creating');
+                Vue.set(state.rows[data.rowId].fields, data.name, { });
+            }
+
+            Vue.set(state.rows[data.rowId].fields[data.name], data.languageId, data.value)
+            
+            console.log('Changed fields:', state.changedFields);
+
+            var cf = state.changedFields.find(x => x.rowId == data.rowId && x.name == data.name && x.languageId == data.languageId)
+            if (cf) {
+                console.log('Fältet är redan redigerat', cf);
+                cf = data;
+            } else {
+                console.log('Adding a field to changed...')
+                state.changedFields.push(data);
+            }
+        },
+        setLanguage(state, languageCode) {
+            state.languageId = Languages[this.languageCode.toLowerCase()].id;
         }
     }
 });
