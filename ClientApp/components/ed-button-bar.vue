@@ -2,12 +2,9 @@
     <div class="ed-hover-buttons">
         <slot name="content"></slot>
         <div :class="classes">
-            <!--class="card ed-button-bar"-->
-            <div class="card-content">
-                <!--<p class="field">-->
+            <!--<div class="card-content">-->
                 <slot name="buttons"></slot>
-                <!--</p>-->
-            </div>
+            <!--</div>-->
         </div>
     </div>
 </template>
@@ -15,11 +12,11 @@
 <script>
 export default {
   name: 'ed-button-bar',
-  props: ['pos'],
+  props: ['pos', 'show'],
   computed: {
       classes: function() {
           if (!this.pos || this.pos == 'topleft') {
-              return ['card', 'ed-button-bar', 'is-top-left']
+              return ['box', 'ed-button-bar', 'is-top-left']
           }
       }
   }
@@ -32,8 +29,9 @@ export default {
 </script>
 
 <style>
-.ed-button-bar .card-content {
-    padding: 0.5rem;
+.ed-button-bar .box {
+    padding: 3px;
+    background-color: #b5b5b5;
 }
 
 .ed-hover-buttons:not(:hover) .ed-button-bar {

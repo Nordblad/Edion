@@ -24,30 +24,21 @@
 import EdText from '../ed-text'
 import EdImage from '../ed-image'
 import RowMixin from '../../edion/row-mixin'
-import EdRowBase from './ed-row-base'
+
 
 export default {
     name: 'row-simple',
     components: {
         EdText,
-        EdImage,
-        EdRowBase
+        EdImage
     },
-    //inject: ['rowId'],
     mixins: [RowMixin],
     data() {
         return {
-            //rowId: -11
-            //leftText: {},
-            //...fieldInits
-            //leftText2: ''
         }
     },
     computed: {
 
-    },
-    mounted() {
-        console.log('MOUNTED - ROW SIMPLE, ID:', this.rowId);
     }
 }
 </script>

@@ -22,11 +22,11 @@
   
       <component v-for="row in $store.state.rows" :is="row.type" :rowId="row.rowId"></component>
   
-      <div class="section">
+      <!--<div class="section">
         <div class="container">
-          <button class="button is-info is-outlined is-centered" @click="openRowPicker()">Add row</button>
+          <button class="button is-info is-outlined is-fullwidth" @click="openRowPicker()">Add row</button>
         </div>
-      </div>
+      </div>-->
   
       <div class="is-overlay" style="background-color: rgba(1, 1, 1, .5)" v-if="rowsLoading">LOADING!</div>
   
@@ -67,6 +67,7 @@ import EdTopbar from 'components/ed-topbar'
 import LanguageTabs from 'components/language-tabs'
 import Rows from '../rows'
 import RowSimple from 'components/rows/row-simple'
+import RowProfiles from 'components/rows/row-profiles'
 import Languages from '../languages'
 import RowPicker from 'components/row-picker'
 import EdRowBase from 'components/rows/ed-row-base'
@@ -78,6 +79,7 @@ export default {
     EdTopbar,
     LanguageTabs,
     RowSimple,
+    RowProfiles,
     RowPicker,
     EdRowBase
   },
@@ -122,16 +124,17 @@ export default {
       var row = {
         pageId: this.id,
         rowId: this.newRowIdCounter,
-        type: 'row-simple',
+        //type: 'row-simple',
+        type: 'row-profiles',
         fields: {},
         sortOrder: this.numberOfRows
       }
       this.newRowIdCounter--;
       this.$store.commit('ADD_ROW', row)
-      this.$store.commit('SELECT_ROW', row.rowId);
+      //this.$store.commit('SELECT_ROW', row.rowId);
     },
     deselectRow() {
-      this.$store.commit('SELECT_ROW', 0);
+      //this.$store.commit('SELECT_ROW', 0);
     }
   },
   watch: {

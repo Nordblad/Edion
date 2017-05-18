@@ -2,19 +2,19 @@
     <nav class="nav has-shadow ed-nav">
         <div class="nav-left">
             <!--<a class="nav-item">
-                                            <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
-                                        </a>-->
+                                                                                        <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
+                                                                                    </a>-->
             <div class="nav-item">
                 <div class="field has-addons">
                     <p class="control">
                         <span class="select">
-                            <select @change="navigateToPage" style="min-width: 180px">
+                            <select @change="navigateToPage" style="min-width: 170px">
                                 <option v-for="page in $store.state.pages" :value="page.pageId" :selected="selectedPageId == page.pageId">{{ page.name }}</option>
                             </select>
                         </span>
                     </p>
                     <p class="control">
-                        <a class="button is-secondary" @click="newPage">
+                        <a class="button is-outlined" @click="newPage">
                             <span class="icon">
                                 <i class="fa fa-plus"></i>
                             </span>
@@ -22,6 +22,19 @@
                     </p>
                 </div>
             </div>
+            <div class="nav-item">
+                <div class="field">
+                    <p class="control">
+                        <a class="button is-outlined">
+                            <span class="icon">
+                                <i class="fa fa-pencil"></i>
+                            </span>
+                            <span>Styles</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
         </div>
     
         <!-- NEW PAGE MODAL -->
@@ -38,24 +51,85 @@
             <slot name="center"></slot>
         </div>
     
-        <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
-        <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
-        <!--<span class="nav-toggle">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>-->
-    
-        <!-- This "nav-menu" is hidden on mobile -->
-        <!-- Add the modifier "is-active" to display it on mobile -->
         <div class="nav-right">
             <div class="nav-item">
                 <div class="field">
                     <p class="control">
-                        <a :class="{ button: true, 'is-primary': true, 'is-disabled': !canSave, 'is-loading': isSaving }" :disabled="!canSave" @click="save">
+                        <button class="button is-outlined">
                             <span class="icon">
-                                <i class="fa fa-save"></i>
+                                <i class="fa fa-plus-circle"></i>
                             </span>
+                            <span>New row</span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <transition name="fade">
+                <div class="box is-unpadded is-narrow has-arrow" v-show="showHistoryWindow" style="position: fixed; top: 60px; right: 10px; width: 364px">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Time</th>
+                                <th>New value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Edit</td>
+                                <td>22:13</td>
+                                <th>Lorem ip</th>
+                            </tr>
+                            <tr>
+                                <td>Edit</td>
+                                <td>22:13</td>
+                                <th>Lorem ip lång text hejsan hejsan</th>
+                            </tr>
+                            <tr>
+                                <td>Edit</td>
+                                <td>22:13</td>
+                                <th>Lorem ip</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </transition>
+            <div class="nav-item">
+                <div class="field">
+                    <p class="control">
+                        <button :class="{ 'button': true, 'is-outlined': true, 'is-dark': showHistoryWindow }" @click="showHistoryWindow = !showHistoryWindow">
+                            <span class="icon">
+                                <i class="fa fa-history"></i>
+                            </span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <div class="nav-item">
+                <div class="field has-addons">
+                    <p class="control">
+                        <button class="button is-outlined">
+                            <span class="icon">
+                                <i class="fa fa-undo"></i>
+                            </span>
+                        </button>
+                    </p>
+                    <p class="control">
+                        <button class="button is-outlined is-disabled" disabled>
+                            <span class="icon">
+                                <i class="fa fa-repeat"></i>
+                            </span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <div class="nav-item">
+                <div class="field">
+                    <p class="control">
+                        <a :class="{ button: true, 'is-primary': true, 'is-disabled': !canSave, 'is-loading': isSaving }" :disabled="!canSave" @click="save">
+                            <!--<span class="icon">
+                                                                    <i class="fa fa-save"></i>
+                                                                </span>-->
                             <span>Save</span>
                         </a>
                     </p>
@@ -82,7 +156,8 @@ export default {
             newPageName: 'New page',
             selectedPage: null,
             select: null,
-            isSaving: false
+            isSaving: false,
+            showHistoryWindow: false
         }
     },
     computed: {
@@ -133,4 +208,49 @@ export default {
     top: 0;
     right: 0;
 }
+
+.box.has-arrow::before {
+    position: absolute;
+    top: -27px;
+    left: 148px;
+    border: 14px solid transparent;
+    border-bottom-color: white;
+    content: ''
+}
+
+
+/* Enter and leave animations can use different */
+
+
+/* durations and timing functions.              */
+
+.slide-fade-enter-active {
+    transition: all .05s ease-in-out;
+}
+
+.slide-fade-leave-active {
+    transition: all .05s ease-in-out;
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to
+/* .slide-fade-leave-active for <2.1.8 */
+
+{
+    /*transform: translate(5px);*/
+    opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .2s transform 0.1s ease
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+  transform: translateY(5px)
+}
+
+/*.box.box.has-arrow::after {
+    border-bottom-color: green;
+    top: -34px;
+}*/
 </style>

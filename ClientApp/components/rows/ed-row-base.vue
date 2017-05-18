@@ -1,5 +1,5 @@
 <template>
-    <div :class="classes" @click="selectRow">
+    <div :class="classes" :style="styles">
         <a class="ed-delete-row delete is-medium" v-if="isSelected" @click="deleteRow"></a>
         <div class="container">
             <slot name="container"></slot>
@@ -9,6 +9,7 @@
 
 <script>
 //import RowSimple from './row-simple'
+
 export default {
   name: 'ed-row-base',
   components: {
@@ -16,10 +17,9 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to ed-row-base'
     }
   },
-  props: ['rowId'],
+  props: ['rowId', 'backgroundColor', 'linearGradient'],
   mounted() {
       console.log('BASE HAS ID: ' + this.rowId)
   },
@@ -30,6 +30,13 @@ export default {
               'ed-row': true,
               'selected': this.isSelected
           }
+      },
+      styles() {
+        if (this.linearGradient) {
+          return { background: this.linearGradient }
+        } else if (this.backgroundColor) {
+          return { backgroundColor: this.backgroundColor }
+        }
       },
       isSelected() {
           return this.$store.state.selectedRow == this.rowId;

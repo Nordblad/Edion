@@ -70,9 +70,9 @@ export default {
         return this.stateFields[0]
       }
   },
-  inject: [ 'bajs' ],
-  mounted() { console.log('SHOULD BE POOP:', this.bajs) },
-  
+  inject: [ 'roo' ],
+  mounted() { console.log('SHOULD BE POOP:', this.roo) },
+
   methods: {
     //...mapMutations(['saveStateTest']),
 

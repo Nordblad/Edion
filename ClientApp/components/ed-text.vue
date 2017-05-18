@@ -1,33 +1,51 @@
 <template>
     <div class="ed-text">
         <!-- Add paste etc -->
-        <div class="card ed-text-buttons" v-if="showToolbar">
-            <div class="card-content">
-                <div class="field has-addons">
-                    <p class="control">
-                        <a class="button">
-                            <span class="icon is-small">
-                                <i class="fa fa-bold"></i>
-                            </span>
-                        </a>
-                    </p>
-                    <p class="control">
-                        <a class="button">
-                            <span class="icon is-small">
-                                <i class="fa fa-italic"></i>
-                            </span>
-                        </a>
-                    </p>
-                    <p class="control">
-                        <a class="button">
-                            <span class="icon is-small">
-                                <i class="fa fa-underline"></i>
-                            </span>
-                        </a>
-                    </p>
+        <ed-button-bar :show="showToolbar">
+            
+        </ed-button-bar>
+        <transition name="fade-quick">
+            <div class="box ed-text-buttons is-marginless" v-show="showToolbar">
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <a class="button">
+                                    <span class="icon is-small">
+                                        <i class="fa fa-bold"></i>
+                                    </span>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a class="button">
+                                    <span class="icon is-small">
+                                        <i class="fa fa-italic"></i>
+                                    </span>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a class="button">
+                                    <span class="icon is-small">
+                                        <i class="fa fa-underline"></i>
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control">
+                                <span class="select">
+                                    <select>
+                                        <option>10</option>
+                                        <option selected>12</option>
+                                        <option>14</option>
+                                    </select>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </transition>
         <div class="content ed-text-editor" contenteditable="true" @blur="onFocusLost" @input="setEdited" v-html="html" @focus="openToolbar"></div>
     </div>
 </template>
@@ -107,25 +125,22 @@ export default {
 .ed-text-buttons {
     position: absolute;
     left: 0;
-    bottom: -3.5rem;
+    bottom: -48px;
 }
 
+.fade-quick-enter-active,
+.fade-quick-leave-active {
+    transition: all .2s ease-in-out;
+}
 
+.fade-quick-enter,
+.fade-quick-leave-to
+/* .fade-leave-active in <2.1.8 */
 
-
-
-
-
-
-
-
-
-
-
-
-/*.ed-text-editor:not(:focus)+.ed-text-buttons {
-    display: none;
-}*/
+{
+    opacity: 0;
+    transform: translateY(5px);
+}
 
 .ed-text-buttons .card-content {
     padding: 0.5rem;

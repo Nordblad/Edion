@@ -1,6 +1,8 @@
 <template>
   <div class="field is-grouped">
-    <router-link v-for="l in languages" :class="{ 'nav-item': true, 'is-tab': true, 'is-small': true, 'is-active': l.id == languageId }" :to="{ name: 'page', params: { id: pageId, languageCode: l.code} }">
+    <router-link v-for="l in languages"
+                :class="{ 'nav-item': true, 'is-tab': true, 'is-small': true, 'is-active': l.id == languageId }"
+                :to="{ name: 'page', params: { id: pageId, languageCode: l.code} }">
       {{ l.code }}
     </router-link>
   </div>
