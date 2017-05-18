@@ -1,17 +1,21 @@
 let rows = [
   {
+    type: 'row-header',
+    description: 'Simple header with logo'
+  },
+  {
     type: 'row-simple',
     image: 'row-simple.jpg',
     description: 'Stort textfält, bild med undertext'
   },
   {
-    type: 'row-block',
-    image: 'row-2.jpg',
-    description: 'Block med diverse innehåll'
+    type: 'row-images',
+    description: 'Några bilder på mörkare bakgrund'
   },
   {
-    type: 'row-header',
-    description: 'Simple header with logo'
+    type: 'row-blocks',
+    image: 'row-2.jpg',
+    description: 'Block med diverse innehåll'
   },
   {
     type: 'row-footer',

@@ -1,7 +1,7 @@
 <template>
   <div>
     <ed-button-bar pos="topleft">
-      <figure class="image is-4by3">
+      <figure :class="imageClasses">
         <transition name="slide-fade">
           <img :src="getImagePath(imageUrl)" :alt="imageUrl" :key="imageUrl" />
         </transition>
@@ -32,16 +32,16 @@
     </ed-modal>
   
     <!--<div class="modal-background ed-imagepicker">
-                                          <div class="container">
-                                              <div class="columns">
-                                                  <div class="column">
-                                                      <div class="card">
-                                                          <div class="card-content">Hej</div>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>-->
+                                            <div class="container">
+                                                <div class="columns">
+                                                    <div class="column">
+                                                        <div class="card">
+                                                            <div class="card-content">Hej</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>-->
   </div>
 </template>
 
@@ -61,7 +61,13 @@ export default {
       EdButtonBar,
       EdModal
   },
-  props: ['size'],
+  props: {
+    size: {
+      type: String,
+      default: '4by3'
+    },
+    center: Boolean
+  },
   data () {
     return {
       imagePickerOpen: false,
@@ -72,11 +78,18 @@ export default {
   computed: {
       imageUrl() {
         return this.stateFields[0]
+      },
+      imageClasses() {
+        var classObj = {
+          'image': true
+        };
+        classObj['is-' + this.size] = true;
+        if (this.center) {
+          classObj['is-margin-auto'] = true;
+        }
+        return classObj;
       }
   },
-  inject: [ 'roo' ],
-  mounted() { console.log('SHOULD BE POOP:', this.roo) },
-
   methods: {
     //...mapMutations(['saveStateTest']),
 
@@ -109,6 +122,11 @@ export default {
 <style>
 .ed-imagepicker-card {
   cursor: pointer;
+}
+
+figure.is-margin-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ed-imagepicker-card:hover {

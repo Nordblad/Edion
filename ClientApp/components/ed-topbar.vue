@@ -62,7 +62,7 @@
                             <span>New row</span>
                         </button>
                         <transition name="fade-quick">
-                            <div class="notification is-info has-arrow" v-if="$store.getters.numberOfRows == 0 && !dismissStarterNotification" style="position: absolute; left: -120px; right: -120px; top: calc(100% + 20px);">
+                            <div class="notification is-info has-arrow" v-if="hasLoadedRows && $store.getters.numberOfRows == 0 && !dismissStarterNotification" style="position: absolute; left: -120px; right: -120px; top: calc(100% + 20px);">
                                 <button class="delete is-small" @click="dismissStarterNotification = true"></button>
                                 Start by choosing a new row to add.
                             </div>
@@ -152,7 +152,10 @@ export default {
     components: {
         EdModal
     },
-    props: ['selectedPageId'],
+    props: { 
+        selectedPageId: { },
+        hasLoadedRows: { default: false }
+    },
     data() {
         return {
             routes,
@@ -233,33 +236,6 @@ export default {
 }
 .ed-history-window .table {
     margin: 0;
-}
-
-
-
-
-
-
-/* Enter and leave animations can use different */
-
-
-/* durations and timing functions.              */
-
-.slide-fade-enter-active {
-    transition: all .05s ease-in-out;
-}
-
-.slide-fade-leave-active {
-    transition: all .05s ease-in-out;
-}
-
-.slide-fade-enter,
-.slide-fade-leave-to
-/* .slide-fade-leave-active for <2.1.8 */
-
-{
-    /*transform: translate(5px);*/
-    opacity: 0;
 }
 
 .fade-enter-active,

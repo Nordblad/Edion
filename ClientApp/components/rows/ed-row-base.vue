@@ -31,7 +31,7 @@ export default {
               'selected': this.isSelected
           };
           if (this.backgroundClass) {
-              classObj[this.backgroundClass] = true;
+              classObj['ed-row-bg-' + this.backgroundClass] = true;
           }
           return classObj;
       },
@@ -62,5 +62,18 @@ export default {
 </script>
 
 <style>
+.ed-row.selected {
+    position: relative;
+}
 
+.ed-row.selected {
+    box-shadow: 0px 0px 18px 3px #d2d2d2;
+    z-index: 1;
+}
+
+.ed-delete-row {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
 </style>

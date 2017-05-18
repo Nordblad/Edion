@@ -87,11 +87,12 @@ export default new Vuex.Store({
                 text: 'Row deleted',
                 details: 'RowId: ' + rowId
             });
-            
-            state.changedRows.push({
-                rowId: rowId,
-                delete: true
-            });
+            if (rowId > 0) {
+                state.changedRows.push({
+                    rowId: rowId,
+                    delete: true
+                });
+            }
             Vue.delete(state.rows, rowId);
         },
         EDIT_FIELD: (state, data) => {

@@ -1,6 +1,19 @@
-.ed-row.ed-bg-gradient1 {
+.ed-row.ed-row-bg-gradient1 {
     /*background: linear-gradient(#0094c1, #007da2);*/
     background: linear-gradient(to right, #f1f1f1, #efefef)
+}
+.ed-row.ed-row-bg-header {
+    background-color: darkred;
+    background: url(http://www.powerpointhintergrund.com/uploads/colorful-blurry-background-image-17.jpg);
+    /*background-position: 50% 50%;*/
+    background-size: cover;
+}
+.ed-row.ed-row-bg-images {
+    background-color: #171717;
+}
+.ed-row.ed-row-bg-footer {
+box-shadow: 0 -2px 30px rgba(119, 119, 119, 0.1);
+    background-color: #efefef;
 }
 .button.is-highlighted {
     box-shadow: 1px 1px 8px 0px rgba(97, 97, 97, 0.47)
