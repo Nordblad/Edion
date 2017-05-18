@@ -2,8 +2,8 @@
     <nav class="nav has-shadow ed-nav">
         <div class="nav-left">
             <!--<a class="nav-item">
-                                                                                        <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
-                                                                                    </a>-->
+                                                                                                            <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
+                                                                                                        </a>-->
             <div class="nav-item">
                 <div class="field has-addons">
                     <p class="control">
@@ -29,7 +29,7 @@
                             <span class="icon">
                                 <i class="fa fa-pencil"></i>
                             </span>
-                            <span>Styles</span>
+                            <!--<span>Styles</span>-->
                         </a>
                     </p>
                 </div>
@@ -54,50 +54,52 @@
         <div class="nav-right">
             <div class="nav-item">
                 <div class="field">
-                    <p class="control">
-                        <button class="button is-outlined">
+                    <div class="control">
+                        <button :class="['button', $store.getters.numberOfRows == 0 ? 'is-highlighted' : '', 'is-outlined']" @click="$emit('addRowButtonClicked')">
                             <span class="icon">
                                 <i class="fa fa-plus-circle"></i>
                             </span>
                             <span>New row</span>
                         </button>
-                    </p>
+                        <transition name="fade-quick">
+                            <div class="notification is-info has-arrow" v-if="$store.getters.numberOfRows == 0 && !dismissStarterNotification" style="position: absolute; left: -120px; right: -120px; top: calc(100% + 20px);">
+                                <button class="delete is-small" @click="dismissStarterNotification = true"></button>
+                                Start by choosing a new row to add.
+                            </div>
+                        </transition>
+                    </div>
                 </div>
             </div>
-            <transition name="fade">
-                <div class="box is-unpadded is-narrow has-arrow" v-show="showHistoryWindow" style="position: fixed; top: 60px; right: 10px; width: 364px">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Type</th>
-                                <th>Time</th>
-                                <th>New value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Edit</td>
-                                <td>22:13</td>
-                                <th>Lorem ip</th>
-                            </tr>
-                            <tr>
-                                <td>Edit</td>
-                                <td>22:13</td>
-                                <th>Lorem ip lång text hejsan hejsan</th>
-                            </tr>
-                            <tr>
-                                <td>Edit</td>
-                                <td>22:13</td>
-                                <th>Lorem ip</th>
-                            </tr>
-                        </tbody>
-                    </table>
+    
+            <!-- TIP TO ADD ROW -->
+    
+            <!-- HISTORY DROP DOWN -->
+            <transition name="fade-quick">
+                <div class="card has-arrow ed-history-window" v-show="showHistoryWindow">
+                    <div class="card-content">
+                        <table class="table is-narrow is-striped ed-history-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Action</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="change in $store.state.history">
+                                    <td>{{ change.time.toTimeString().substring(0, 8) }}</td>
+                                    <td>{{ change.text }}</td>
+                                    <td>{{ change.details }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </transition>
             <div class="nav-item">
                 <div class="field">
                     <p class="control">
-                        <button :class="{ 'button': true, 'is-outlined': true, 'is-dark': showHistoryWindow }" @click="showHistoryWindow = !showHistoryWindow">
+                        <button :class="{ 'button': true, 'is-outlined': true, 'is-dark': showHistoryWindow }" :disabled="$store.state.history.length == 0" @click="showHistoryWindow = !showHistoryWindow">
                             <span class="icon">
                                 <i class="fa fa-history"></i>
                             </span>
@@ -128,14 +130,16 @@
                     <p class="control">
                         <a :class="{ button: true, 'is-primary': true, 'is-disabled': !canSave, 'is-loading': isSaving }" :disabled="!canSave" @click="save">
                             <!--<span class="icon">
-                                                                    <i class="fa fa-save"></i>
-                                                                </span>-->
+                                                                                        <i class="fa fa-save"></i>
+                                                                                    </span>-->
                             <span>Save</span>
                         </a>
                     </p>
                 </div>
             </div>
         </div>
+    
+        <div v-if="isSaving" style="position: fixed; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, .4); z-index: 2"></div>
     
     </nav>
 </template>
@@ -157,7 +161,8 @@ export default {
             selectedPage: null,
             select: null,
             isSaving: false,
-            showHistoryWindow: false
+            showHistoryWindow: false,
+            dismissStarterNotification: false
         }
     },
     computed: {
@@ -192,9 +197,6 @@ export default {
             // console.log('SAVE VM:', { changes: { rows: rows, fields: fields }})
             this.$store.dispatch('SAVE', { changedRows: this.$store.state.changedRows, changedFields: this.$store.state.changedFields }).then(() => self.isSaving = false);
         }
-    },
-    watch: {
-        'selectedPageId': function () { console.log('watch'); }
     }
 }
 </script>
@@ -209,14 +211,33 @@ export default {
     right: 0;
 }
 
-.box.has-arrow::before {
+.card.has-arrow::before {
     position: absolute;
     top: -27px;
-    left: 148px;
+    right: 187px;
     border: 14px solid transparent;
     border-bottom-color: white;
     content: ''
 }
+
+.ed-history-window {
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    width: 480px;
+    max-height: calc(100vh - 80px);
+    font-size: 0.8rem;
+}
+.ed-history-window .card-content {
+    padding: 0.5rem;
+}
+.ed-history-window .table {
+    margin: 0;
+}
+
+
+
+
 
 
 /* Enter and leave animations can use different */
@@ -241,13 +262,39 @@ export default {
     opacity: 0;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .2s transform 0.1s ease
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .2s transform 0.1s ease
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-  opacity: 0;
-  transform: translateY(5px)
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in <2.1.8 */
+
+{
+    opacity: 0;
+    transform: translateY(4px)
 }
+
+
+
+/*.button.is-highlighted {
+    box-shadow: 1px 1px 8px 0px rgba(97, 97, 97, 0.47)
+}*/
+
+.fade-quick-enter-active,
+.fade-quick-leave-active {
+    transition: all .2s ease-in-out;
+}
+
+.fade-quick-enter,
+.fade-quick-leave-to {
+    opacity: 0;
+    transform: translateY(3px);
+}
+
+
+
 
 /*.box.box.has-arrow::after {
     border-bottom-color: green;

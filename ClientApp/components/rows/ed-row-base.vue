@@ -19,17 +19,21 @@ export default {
     return {
     }
   },
-  props: ['rowId', 'backgroundColor', 'linearGradient'],
+  props: ['rowId', 'backgroundColor', 'linearGradient', 'backgroundClass'],
   mounted() {
       console.log('BASE HAS ID: ' + this.rowId)
   },
   computed: {
       classes() {
-          return {
+          var classObj = {
               'section': true,
               'ed-row': true,
               'selected': this.isSelected
+          };
+          if (this.backgroundClass) {
+              classObj[this.backgroundClass] = true;
           }
+          return classObj;
       },
       styles() {
         if (this.linearGradient) {

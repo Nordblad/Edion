@@ -3,16 +3,16 @@
         <div class="columns" slot="container">
             <div class="column is-two-thirds">
                 <div class="notification">
-                    <ed-text fieldName="leftText" defaultValue="Default value of leftText" :rowId="rowId" />
+                    <ed-text fieldName="leftText" :defaultValue="{ type: 'lorem', words: 155 }" :rowId="rowId" />
                 </div>
             </div>
             <div class="column">
                 <div class="card">
                     <div class="card-image">
-                        <ed-image fieldName="image" size="4by3" defaultValue="example1.jpg" :rowId="rowId" />
+                        <ed-image fieldName="image" size="4by3" :defaultValue="{ type: 'image' }" :rowId="rowId" />
                     </div>
                     <div class="card-content">
-                        <ed-text fieldName="imageDescription" defaultValue="En snazzig bildtext" :rowId="rowId" />
+                        <ed-text fieldName="imageDescription" :defaultValue="{ type: 'lorem', words: 15 }" :rowId="rowId" />
                     </div>
                 </div>
             </div>

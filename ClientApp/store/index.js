@@ -30,12 +30,19 @@ const actions = {
     }
 }
 
+const getters = {
+    numberOfRows: state => {
+        return Object.keys(state.rows).length;
+    }
+}
+
 export default new Vuex.Store({
     //INITIAL_STATE,
     actions,
+    getters,
     state: {
         pages: [],
-        changes: [],
+        history: [],
         changedRows: [],
         changedFields: [],
         rows: {},
@@ -66,11 +73,25 @@ export default new Vuex.Store({
         // },
         ADD_ROW: (state, data) => {
             console.log('STORE: add_row:', data);
+            state.history.push({
+                time: new Date(),
+                text: 'Row added',
+                details: 'Type: ' + data.type
+            });
             Vue.set(state.rows, data.rowId, data);
             state.changedRows.push(data);
         },
         DELETE_ROW: (state, rowId) => {
-            var r = state.rows[rowId];
+            state.history.push({
+                time: new Date(),
+                text: 'Row deleted',
+                details: 'RowId: ' + rowId
+            });
+            
+            state.changedRows.push({
+                rowId: rowId,
+                delete: true
+            });
             Vue.delete(state.rows, rowId);
         },
         EDIT_FIELD: (state, data) => {
@@ -78,15 +99,19 @@ export default new Vuex.Store({
             //     console.log('tror inte man ska se det här')
             //     Vue.set(state.rows[data.rowId], 'fields', { })
             // }
+            let isNewField = false;
             if (!state.rows[data.rowId].fields[data.name]) {
                 console.log('No ' + data.name + ' prop in fields, creating');
                 Vue.set(state.rows[data.rowId].fields, data.name, {});
             }
+            if (!state.rows[data.rowId].fields[data.name][data.languageId]) {
+                isNewField = true;
+            }
 
             Vue.set(state.rows[data.rowId].fields[data.name], data.languageId, data.value)
 
-            console.log('Changed fields:', state.changedFields);
-            console.log('And rows:', state.changedRows);
+            // console.log('Changed fields:', state.changedFields);
+            // console.log('And rows:', state.changedRows);
 
             var cf = state.changedFields.find(x => x.rowId == data.rowId && x.name == data.name && x.languageId == data.languageId)
             if (cf) {
@@ -95,6 +120,13 @@ export default new Vuex.Store({
             } else {
                 console.log('Adding a field to changed...')
                 state.changedFields.push(data);
+            }
+            if (!isNewField) {
+                state.history.push({
+                    time: new Date(),
+                    text: 'Field changed',
+                    details: 'Row: ' + data.rowId + ', field: ' + data.name + ', language: ' + data.languageId
+                });
             }
         },
         CLEAR_CHANGED: (state) => {

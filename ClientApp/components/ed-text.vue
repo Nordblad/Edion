@@ -1,52 +1,47 @@
 <template>
     <div class="ed-text">
         <!-- Add paste etc -->
-        <ed-button-bar :show="showToolbar">
-            
-        </ed-button-bar>
-        <transition name="fade-quick">
-            <div class="box ed-text-buttons is-marginless" v-show="showToolbar">
-                <div class="field is-horizontal">
-                    <div class="field-body">
-                        <div class="field has-addons">
-                            <p class="control">
-                                <a class="button">
-                                    <span class="icon is-small">
-                                        <i class="fa fa-bold"></i>
-                                    </span>
-                                </a>
-                            </p>
-                            <p class="control">
-                                <a class="button">
-                                    <span class="icon is-small">
-                                        <i class="fa fa-italic"></i>
-                                    </span>
-                                </a>
-                            </p>
-                            <p class="control">
-                                <a class="button">
-                                    <span class="icon is-small">
-                                        <i class="fa fa-underline"></i>
-                                    </span>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="field">
-                            <p class="control">
-                                <span class="select">
-                                    <select>
-                                        <option>10</option>
-                                        <option selected>12</option>
-                                        <option>14</option>
-                                    </select>
+        <ed-button-bar :show="showToolbar" position="below">
+            <div class="content ed-text-editor" contenteditable="true" @blur="onFocusLost" @input="setEdited" v-html="html" @focus="openToolbar"></div>
+            <div class="field is-horizontal" slot="buttons">
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <a class="button">
+                                <span class="icon is-small">
+                                    <i class="fa fa-bold"></i>
                                 </span>
-                            </p>
-                        </div>
+                            </a>
+                        </p>
+                        <p class="control">
+                            <a class="button">
+                                <span class="icon is-small">
+                                    <i class="fa fa-italic"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="control">
+                            <a class="button">
+                                <span class="icon is-small">
+                                    <i class="fa fa-underline"></i>
+                                </span>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control">
+                            <span class="select">
+                                <select>
+                                    <option>10</option>
+                                    <option selected>12</option>
+                                    <option>14</option>
+                                </select>
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>
-        </transition>
-        <div class="content ed-text-editor" contenteditable="true" @blur="onFocusLost" @input="setEdited" v-html="html" @focus="openToolbar"></div>
+        </ed-button-bar>
     </div>
 </template>
 
@@ -117,32 +112,4 @@ export default {
 </script>
 
 <style>
-.ed-text {
-    /*box-shadow: 0 0 0 1px red;*/
-    position: relative;
-}
-
-.ed-text-buttons {
-    position: absolute;
-    left: 0;
-    bottom: -48px;
-}
-
-.fade-quick-enter-active,
-.fade-quick-leave-active {
-    transition: all .2s ease-in-out;
-}
-
-.fade-quick-enter,
-.fade-quick-leave-to
-/* .fade-leave-active in <2.1.8 */
-
-{
-    opacity: 0;
-    transform: translateY(5px);
-}
-
-.ed-text-buttons .card-content {
-    padding: 0.5rem;
-}
 </style>

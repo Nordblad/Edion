@@ -1,0 +1,7 @@
+.ed-row.ed-bg-gradient1 {
+    /*background: linear-gradient(#0094c1, #007da2);*/
+    background: linear-gradient(to right, #f1f1f1, #efefef)
+}
+.button.is-highlighted {
+    box-shadow: 1px 1px 8px 0px rgba(97, 97, 97, 0.47)
+}

@@ -1,17 +1,21 @@
 <template>
   <div>
     <ed-button-bar pos="topleft">
-      <figure class="image is-4by3" slot="content">
+      <figure class="image is-4by3">
         <transition name="slide-fade">
           <img :src="getImagePath(imageUrl)" :alt="imageUrl" :key="imageUrl" />
         </transition>
       </figure>
-      <a class="button" slot="buttons" @click="openImagePicker">
-        <span class="icon">
-          <i class="fa fa-image"></i>
-        </span>
-        <span>Change</span>
-      </a>
+      <div class="field" slot="buttons">
+        <p class="control">
+          <button class="button" @click="imagePickerOpen = true">
+            <span class="icon">
+              <i class="fa fa-image"></i>
+            </span>
+            <span>Change image</span>
+          </button>
+        </p>
+      </div>
     </ed-button-bar>
     <ed-modal v-if="imagePickerOpen" @cancel="imagePickerOpen = false" :card="false">
       <div class="columns" v-for="row in splitIntoRows(images, 3)">
@@ -28,16 +32,16 @@
     </ed-modal>
   
     <!--<div class="modal-background ed-imagepicker">
-                                        <div class="container">
-                                            <div class="columns">
-                                                <div class="column">
-                                                    <div class="card">
-                                                        <div class="card-content">Hej</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>-->
+                                          <div class="container">
+                                              <div class="columns">
+                                                  <div class="column">
+                                                      <div class="card">
+                                                          <div class="card-content">Hej</div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>-->
   </div>
 </template>
 
@@ -122,20 +126,6 @@ export default {
   right: 0;
   bottom: 0;
 }
-
-
-
-
-
-
-
-
-
-
-/* Enter and leave animations can use different */
-
-
-/* durations and timing functions.              */
 
 .slide-fade-enter-active {
   transition: all .4s ease;
