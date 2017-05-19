@@ -94,6 +94,7 @@ export default new Vuex.Store({
                 });
             }
             Vue.delete(state.rows, rowId);
+            console.log('store delete: ', rowId);
         },
         EDIT_FIELD: (state, data) => {
             // if (!state.rows[data.rowId].fields) {

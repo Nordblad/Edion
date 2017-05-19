@@ -1,7 +1,7 @@
 {
   "name": "aspnetcore-vuejs",
-  "description": "ASP.NET Core & VueJS Starter project",
-  "author": "Mark Pieszak",
+  "description": "Examensarbete Edion",
+  "author": "Olov Nordblad",
   "scripts": {
     "dev": "cross-env ASPNETCORE_ENVIRONMENT=Development NODE_ENV=development dotnet run",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
@@ -44,5 +44,8 @@
     "vue-loader": "^10.0.2",
     "webpack": "^2.2.0",
     "webpack-hot-middleware": "^2.12.2"
+  },
+   "optionalDependencies": {
+    "fsevents": "*"
   }
 }

@@ -1,5 +1,5 @@
 <template>
-    <ed-row-base>
+    <ed-row-base :rowId="rowId">
         <div class="columns" slot="container">
             <div class="column is-two-thirds">
                 <div class="notification has-2-columns-tablet">

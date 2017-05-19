@@ -1,5 +1,5 @@
 <template>
-    <ed-row-base backgroundClass="gradient1">
+    <ed-row-base backgroundClass="gradient1" :rowId="rowId">
         <div class="tile is-ancestor" slot="container">
             <div class="tile is-vertical is-8">
                 <div class="tile">

@@ -1,5 +1,5 @@
 <template>
-    <ed-row-base backgroundClass="header">
+    <ed-row-base backgroundClass="header" :rowId="rowId">
         <div class="columns" slot="container">
             <div class="column is-4 is-offset-4">
                 <ed-image fieldName="logoType" defaultValue="example-logo-white.png" :rowId="rowId" size="2by1"/>

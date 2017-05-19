@@ -1,5 +1,5 @@
 <template>
-    <ed-row-base backgroundClass="footer">
+    <ed-row-base backgroundClass="footer" :rowId="rowId">
         <!--<footer class="columns is-multiline" slot="container">
                                         <div class="column is-5">
                                             <div class="content">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="column is-12-mobile is-2-tablet is-first-mobile">
-                    <ed-image fieldName="smallLogo" size="64x64" defaultValue="example-logo-square-dark.png" :rowId="rowId" center="true" />
+                    <ed-image fieldName="smallLogo" size="64x64" defaultValue="example-logo-square-dark.png" :rowId="rowId" :center="true" />
                 </div>
                 <div class="column is-half-mobile is-5-tablet has-text-right">
                     <div class="content">

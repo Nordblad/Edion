@@ -1,5 +1,5 @@
 <template>
-    <ed-row-base backgroundClass="bar">
+    <ed-row-base backgroundClass="bar" :rowId="rowId">
         <nav class="level" slot="container">
             <div class="level-item">
                 <div class="field is-grouped">

@@ -103,7 +103,18 @@ namespace Vue2Spa.Controllers
         {
             foreach (var row in changes.ChangedRows)
             {
-                if (row.RowId < 0)
+                if (row.Delete == true) {
+                    var rowToDelete = _context.Rows.Find(row.RowId);
+
+                    foreach(var f in changes.ChangedFields.Where(x => x.RowId == row.RowId).ToList()) {
+                        changes.ChangedFields.Remove(f);
+                    }
+                    if (rowToDelete != null) {
+                        _context.Fields.RemoveRange(_context.Fields.Where(x => x.Row == rowToDelete));
+                        _context.Rows.Remove(rowToDelete);
+                    }
+                }
+                else if (row.RowId < 0)
                 {
                     // Its a newly added row
                     var temporaryId = row.RowId;

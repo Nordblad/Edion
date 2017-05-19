@@ -1,5 +1,5 @@
 <template>
-    <ed-row-base backgroundClass="images">
+    <ed-row-base backgroundClass="images" :rowId="rowId">
         <div slot="container" class="has-text-centered">
             <p class="title is-2 is-light-text is-letter-spaced">
                 <ed-text fieldName="title" :rowId="rowId" defaultValue="Gallery" />

@@ -1,6 +1,6 @@
 <template>
     <div :class="classes" :style="styles">
-        <a class="ed-delete-row delete is-medium" v-if="isSelected" @click="deleteRow"></a>
+        <a class="ed-delete-row delete is-medium" @click="deleteRow"></a>
         <div class="container">
             <slot name="container"></slot>
         </div>
@@ -27,8 +27,8 @@ export default {
       classes() {
           var classObj = {
               'section': true,
-              'ed-row': true,
-              'selected': this.isSelected
+              'ed-row': true
+              //'selected': this.isSelected
           };
           if (this.backgroundClass) {
               classObj['ed-row-bg-' + this.backgroundClass] = true;
@@ -41,18 +41,18 @@ export default {
         } else if (this.backgroundColor) {
           return { backgroundColor: this.backgroundColor }
         }
-      },
-      isSelected() {
-          return this.$store.state.selectedRow == this.rowId;
       }
+    //   isSelected() {
+    //       return this.$store.state.selectedRow == this.rowId;
+    //   }
   },
       methods: {
-        selectRow(e) {
-            if (!this.isSelected) {
-                this.$store.commit("SELECT_ROW", this.rowId);
-                console.log('Select row!' + this.rowId);
-            }
-        },
+        // selectRow(e) {
+        //     if (!this.isSelected) {
+        //         this.$store.commit("SELECT_ROW", this.rowId);
+        //         console.log('Select row!' + this.rowId);
+        //     }
+        // },
         deleteRow(e) {
             console.log('DELETE?!');
             this.$store.commit("DELETE_ROW", this.rowId);
@@ -64,6 +64,9 @@ export default {
 <style>
 .ed-row.selected {
     position: relative;
+}
+.ed-row:not(:hover) .ed-delete-row {
+    display: none;
 }
 
 .ed-row.selected {
