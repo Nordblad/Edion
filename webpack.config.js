@@ -28,10 +28,10 @@ module.exports = (env) => {
             rules: [
                 { test: /\.vue$/, include: /ClientApp/, use: 'vue-loader' },
                 {
-                    test: /\.js$/, include: /ClientApp/, use: 'babel-loader',
-                    query: { // Lösning på Azure-error som inte fungerade.
-                        presets: ["es2015"]
-                    }
+                    test: /\.js$/, include: /ClientApp/, use: 'babel-loader'
+                    // query: { // Lösning på Azure-error som inte fungerade.
+                    //     presets: ["es2015"]
+                    // }
                 },
                 { test: /\.ts$/, include: /ClientApp/, use: 'awesome-typescript-loader?silent=true' },
                 { test: /\.css$/, use: isDevBuild ? ['style-loader', 'css-loader'] : ExtractTextPlugin.extract({ use: 'css-loader' }) },
