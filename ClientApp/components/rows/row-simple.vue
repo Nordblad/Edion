@@ -2,8 +2,9 @@
     <ed-row-base>
         <div class="columns" slot="container">
             <div class="column is-two-thirds">
-                <div class="notification">
-                    <ed-text fieldName="leftText" :defaultValue="{ type: 'lorem', words: 200 }" :rowId="rowId" />
+                <div class="notification has-2-columns-tablet">
+                    <h2 class="title is-2">Test!</h2>
+                    <ed-text fieldName="leftText" :defaultValue="{ type: 'lorem', words: 180 }" :rowId="rowId" />
                 </div>
             </div>
             <div class="column">

@@ -88,6 +88,9 @@ export default {
     opacity: 0;
     transform: translateY(3px);
 }
+.ed-button-bar-container.show-toolbar-on-hover:hover {
+    box-shadow: 0 0 0 1px #696969;
+}
 .ed-button-bar-container.show-toolbar-on-hover:hover .ed-button-bar {
     opacity: 1;
     transform: none;

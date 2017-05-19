@@ -1,10 +1,10 @@
 <template>
     <ed-row-base backgroundClass="images">
         <div slot="container" class="has-text-centered">
-            <p class="title is-2 has-light-text">
+            <p class="title is-2 is-light-text is-letter-spaced">
                 <ed-text fieldName="title" :rowId="rowId" defaultValue="Gallery" />
             </p>
-            <p class="subtitle is-5 has-light-text">
+            <p class="subtitle is-5 is-light-text">
                 <ed-text fieldName="subTitle" :rowId="rowId" :defaultValue="{ type: 'lorem', words: 5 }" />
             </p>
             <div class="columns">
@@ -60,8 +60,11 @@ export default {
 </script>
 
 <style>
-.has-light-text,
-.has-light-text .content {
+.is-light-text,
+.is-light-text .content {
     color: #FFF;
+}
+.is-letter-spaced {
+    letter-spacing: 16px;
 }
 </style>

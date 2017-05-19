@@ -20,6 +20,10 @@ let rows = [
   {
     type: 'row-footer',
     description: 'Simple footer with some links'
+  },
+  {
+    type: 'row-bar',
+    description: 'En rad med plats för tex dela-länkar'
   }
 ];
 

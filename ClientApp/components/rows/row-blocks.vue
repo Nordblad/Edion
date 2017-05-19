@@ -10,19 +10,17 @@
                                     <img src="/dist/img/square480-1.jpg" />
                                 </figure>
                             </div>
-                            <!--<div class="card-content is-half-padded">
-                                    </div>-->
                             <footer class="card-footer">
                                 <p class="card-footer-item is-downvote">
-                                    <span class="icon is-big">
+                                    <span class="icon">
                                         <i class="fa fa-thumbs-down"></i>
                                     </span>
                                 </p>
                                 <p class="card-footer-item">
-                                    <span>+3321</span>
+                                    <strong>+3321</strong>
                                 </p>
                                 <p class="card-footer-item is-upvote">
-                                    <span class="icon is-big">
+                                    <span class="icon">
                                         <i class="fa fa-thumbs-up"></i>
                                     </span>
                                 </p>
@@ -37,15 +35,15 @@
                             </div>
                             <footer class="card-footer">
                                 <p class="card-footer-item is-downvote">
-                                    <span class="icon is-big">
+                                    <span class="icon">
                                         <i class="fa fa-thumbs-down"></i>
                                     </span>
                                 </p>
                                 <p class="card-footer-item">
-                                    <span>+213</span>
+                                    <strong>+213</strong>
                                 </p>
                                 <p class="card-footer-item is-upvote">
-                                    <span class="icon is-big">
+                                    <span class="icon">
                                         <i class="fa fa-thumbs-up"></i>
                                     </span>
                                 </p>
@@ -55,23 +53,108 @@
                     </div>
                     <div class="tile is-parent">
                         <article class="tile is-child ed-image-background box">
-                            <div class="ed-image-overlay">
-                                <div class="content">
-                                    <h1 class="title">Titel</h1>
-                                </div>
+                            <div class="ed-image-overlay is-half-padding">
+                                <nav class="pagination is-centered is-small">
+                                    <a class="pagination-previous"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                                    <a class="pagination-next"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                    <ul class="pagination-list">
+                                        <li>
+                                            <a class="pagination-link">1</a>
+                                        </li>
+                                        <li>
+                                            <span class="pagination-ellipsis">&hellip;</span>
+                                        </li>
+                                        <li>
+                                            <a class="pagination-link">45</a>
+                                        </li>
+                                        <li>
+                                            <a class="pagination-link is-current">46</a>
+                                        </li>
+                                        <li>
+                                            <a class="pagination-link">47</a>
+                                        </li>
+                                        <li>
+                                            <span class="pagination-ellipsis">&hellip;</span>
+                                        </li>
+                                        <li>
+                                            <a class="pagination-link">86</a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                             <!-- Put any content you want -->
                         </article>
                     </div>
                 </div>
                 <div class="tile is-parent">
-                    <article class="tile is-child box">
-                        <!-- Put any content you want -->
+                    <article class="tile is-child box is-half-padding">
+                        <nav class="level">
+                            <!-- Left side -->
+                            <div class="level-left">
+                                <div class="level-item">
+                                    <p class="subtitle is-6">
+                                        Subscribe to out newsletter!
+                                    </p>
+                                </div>
+                            </div>
+    
+                            <!-- Right side -->
+                            <div class="level-right">
+                                <div class="level-item">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <input class="input is-medium" type="text" placeholder="Your email">
+                                        </p>
+                                        <p class="control">
+                                            <button class="button is-medium is-success">
+                                                Subscribe
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
                     </article>
                 </div>
             </div>
             <div class="tile is-parent">
-                <article class="tile is-child box">
+                <article class="tile is-child box" style="position: relative">
+                    <div class="chat-container">
+                        <div class="chat-header">CHAT</div>
+                        <div class="chat-messages">
+                            <article class="media" v-for="item in fakeNewsFeed">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        <img src="/dist/img/square1.jpg">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>{{ item.name }}</strong>
+                                            <br> {{ item.text }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="media-right">
+                                    <small>31m</small>
+                                    <!--<button class="delete"></button>-->
+                                </div>
+                            </article>
+                        </div>
+                        
+                    </div>
+                        <div class="chat-bottom is-half-padding">
+                            <div class="field has-addons">
+                                <p class="control is-expanded">
+                                    <input type="text" class="input is-medium" placeholder="Chat"/>
+                                </p>
+                                <p class="control">
+                                    <button class="button is-medium is-dark">Send</button>
+                                </p>
+    
+                            </div>
+                        </div>
                     <!-- Put any content you want -->
                 </article>
             </div>
@@ -202,10 +285,21 @@ export default {
     mixins: [RowMixin],
     data() {
         return {
+            //fakeNewsFeed: []
         }
     },
     computed: {
-
+        fakeNewsFeed() {
+            var feed = [];
+            for (var i = 0; i < 15; i++) {
+                feed.push({
+                    image: 'example1.jpg',
+                    name: 'Blerg Max',
+                    text: 'Lorem ipsum dolor sit amet'
+                });
+            }
+            return feed
+        }
     }
 }
 </script>
@@ -245,16 +339,51 @@ export default {
 }
 
 .ed-image-overlay {
-background-color: rgba(1, 1, 1, 0.64);
+    background-color: #fff;
     position: absolute;
-    /*left: 2rem;
-    top: 2rem;
-    bottom: 2rem;
-    right: 2rem;*/
     border-radius: 3px;
-    padding: 0.75rem;
+    padding: 0.9rem;
+    left: 5px;
+    bottom: 5px;
+    right: 5px;
+    box-shadow: 1px 1px 3px rgba(1, 1, 1, .1);
+}
+
+.chat-container {
+    overflow: auto;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+bottom: 82px;
+    margin: 8x;
+    margin-right: 0;
+}
+
+.chat-header {
+    display: none;
+}
+
+.chat-messages .media {
+    margin: 0.6rem;
+    padding-top: 0.6rem;
+    margin-top: 0;
+}
+
+.chat-messages .media .media-left {
+    margin-right: 0.6rem;
+}
+.chat-bottom {
+        position: absolute;
     left: 0;
     bottom: 0;
     right: 0;
+    /* height: 40px; */
+    border-radius: 5px;
+    box-shadow: 0 -1px 2px rgba(1, 1, 1, .1);
+    background-color: #FFF;
+}
+.is-half-padding {
+    padding: 0.8rem;
 }
 </style>

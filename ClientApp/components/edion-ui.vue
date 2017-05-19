@@ -43,6 +43,7 @@ import RowBlocks from 'components/rows/row-blocks'
 import RowHeader from 'components/rows/row-header'
 import RowImages from 'components/rows/row-images'
 import RowFooter from 'components/rows/row-footer'
+import RowBar from 'components/rows/row-bar'
 
 import Languages from '../languages'
 import RowPicker from 'components/row-picker'
@@ -59,6 +60,7 @@ export default {
     RowHeader,
     RowImages,
     RowFooter,
+    RowBar,
     RowPicker,
     EdRowBase
   },
