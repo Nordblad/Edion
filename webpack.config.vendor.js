@@ -35,8 +35,10 @@ module.exports = (env) => {
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': isDevBuild ? '"development"' : '"production"'
             })
-        ].concat(isDevBuild ? [] : [
-            new webpack.optimize.UglifyJsPlugin()
-        ])
+        ]
+        // Testar att ta bort för Azure
+        // .concat(isDevBuild ? [] : [
+        //     new webpack.optimize.UglifyJsPlugin()
+        // ])
     }];
 };

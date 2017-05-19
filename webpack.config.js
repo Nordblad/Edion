@@ -28,7 +28,8 @@ module.exports = (env) => {
             rules: [
                 { test: /\.vue$/, include: /ClientApp/, use: 'vue-loader' },
                 {
-                    test: /\.js$/, include: /ClientApp/, use: 'babel-loader', query: {
+                    test: /\.js$/, include: /ClientApp/, use: 'babel-loader',
+                    query: { // Lösning på Azure-error som inte fungerade.
                         presets: ["es2015"]
                     }
                 },
