@@ -62,7 +62,7 @@
                             <span>New row</span>
                         </button>
                         <transition name="fade-quick">
-                            <div class="notification is-info has-arrow" v-if="hasLoadedRows && $store.getters.numberOfRows == 0 && !dismissStarterNotification" style="position: absolute; left: -120px; right: -120px; top: calc(100% + 20px);">
+                            <div class="notification is-info has-arrow" v-show="hasLoadedRows && $store.getters.numberOfRows == 0 && !dismissStarterNotification" style="position: absolute; left: -120px; right: -120px; top: calc(100% + 20px);">
                                 <button class="delete is-small" @click="dismissStarterNotification = true"></button>
                                 Start by choosing a new row to add.
                             </div>

@@ -1,6 +1,18 @@
 <template>
     <div :class="classes" :style="styles">
-        <a class="ed-delete-row delete is-medium" @click="deleteRow"></a>
+        <a class="ed-delete-row delete is-large" @click="deleteRow"></a>
+        <div class="ed-row-order-buttons">
+            <div class="ed-row-order-button ed-row-up">
+                <span class="icon is-large">
+                    <i class="fa fa-caret-up"></i>
+                </span>
+            </div>
+            <div class="ed-row-order-button ed-row-down">
+                <span class="icon is-large">
+                    <i class="fa fa-caret-down"></i>
+                </span>
+            </div>
+        </div>
         <div class="container">
             <slot name="container"></slot>
         </div>
@@ -65,6 +77,7 @@ export default {
 .ed-row.selected {
     position: relative;
 }
+
 .ed-row:not(:hover) .ed-delete-row {
     display: none;
 }
@@ -78,5 +91,28 @@ export default {
     position: absolute;
     right: 10px;
     top: 10px;
+}
+
+/*.ed-row:not(:hover) .ed-row-order-buttons {
+    display: none;
+}*/
+
+.ed-row-order-buttons {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+.ed-row-order-buttons .ed-row-order-button {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(10,10,10,.3);
+    border-radius: 4px;
+}
+.ed-row-order-buttons .ed-row-order-button:hover {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(10,10,10,.6);
+}
+.ed-row-order-buttons .ed-row-order-button:not(:last-child) {
+    margin-bottom: 4px;
 }
 </style>
