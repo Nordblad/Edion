@@ -81,6 +81,7 @@ export default {
     background-color: #656565;
     position: absolute;
     z-index: 3;
+    letter-spacing: 0;
 }
 
 .ed-button-bar-container.show-toolbar-on-hover .ed-button-bar {

@@ -16,16 +16,16 @@ const fieldMixin = {
     editField(field) {
       this.$store.commit('EDIT_FIELD', field);
     },
-    lorem(noOfWords) {
+    lorem(noOfWords, plain) {
       var result = ['Lorem'];
       var words = loremIpsum.split(' ');
       for (var i = 1; i < noOfWords; i++) {
         var r = Math.floor(Math.random() * words.length) + 1;
 
         var rollForExtraTags = Math.floor(Math.random() * 100);
-        if (rollForExtraTags <= 3) // 3% change to be a link
+        if (!plain && rollForExtraTags <= 3) // 3% change to be a link
           result.push('<a>' + words[r] + '</a>');
-        else if (rollForExtraTags <= 6) // 3% to be bold
+        else if (!plain && rollForExtraTags <= 6) // 3% to be bold
           result.push('<strong>' + words[i] + '</strong>')
         //else if (noOfWords > 20)
         else
@@ -39,7 +39,7 @@ const fieldMixin = {
     },
     getGeneratedDefaultValue(defVal) {
       if (defVal.type === 'lorem') {
-        return this.lorem(defVal.words || 1);
+        return this.lorem(defVal.words || 1, defVal.plain || false);
       } else if (defVal.type === 'image') {
         var i = Math.floor(Math.random() * 10) + 1;
         return 'example' + i + '.jpg';

@@ -5,7 +5,7 @@
                 <ed-text fieldName="title" :rowId="rowId" defaultValue="Gallery" />
             </p>
             <p class="subtitle is-5 is-light-text">
-                <ed-text fieldName="subTitle" :rowId="rowId" :defaultValue="{ type: 'lorem', words: 5 }" />
+                <ed-text fieldName="subTitle" :rowId="rowId" :defaultValue="{ type: 'lorem', words: 5, plain: true }" />
             </p>
             <div class="columns">
                 <div class="column">

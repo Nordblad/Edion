@@ -128,7 +128,7 @@
             <div class="nav-item">
                 <div class="field">
                     <p class="control">
-                        <a :class="{ button: true, 'is-primary': true, 'is-disabled': !canSave, 'is-loading': isSaving }" :disabled="!canSave" @click="save">
+                        <a :class="{ button: true, 'is-primary': true, 'is-outlined': !canSave, 'is-loading': isSaving }" :disabled="!canSave" @click="save">
                             <!--<span class="icon">
                                                                                         <i class="fa fa-save"></i>
                                                                                     </span>-->

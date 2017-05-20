@@ -3,44 +3,46 @@
         <!-- Add paste etc -->
         <ed-button-bar :show="showToolbar" position="below">
             <div class="content ed-text-editor" contenteditable="true" @blur="onFocusLost" @input="setEdited" v-html="html" @focus="openToolbar"></div>
-            <div class="field is-horizontal" slot="buttons">
-                <div class="field-body">
-                    <div class="field has-addons">
-                        <p class="control">
-                            <a class="button">
-                                <span class="icon is-small">
-                                    <i class="fa fa-bold"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                            <a class="button">
-                                <span class="icon is-small">
-                                    <i class="fa fa-italic"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                            <a class="button">
-                                <span class="icon is-small">
-                                    <i class="fa fa-underline"></i>
-                                </span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="field">
-                        <p class="control">
-                            <span class="select">
-                                <select>
-                                    <option>10</option>
-                                    <option selected>12</option>
-                                    <option>14</option>
-                                </select>
+            <!--<div class="field is-horizontal" slot="buttons">
+                        <div class="field-body">-->
+            <div class="field is-grouped" slot="buttons">
+                <div class="field has-addons">
+                    <p class="control">
+                        <a class="button">
+                            <span class="icon is-small">
+                                <i class="fa fa-bold"></i>
                             </span>
-                        </p>
-                    </div>
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a class="button">
+                            <span class="icon is-small">
+                                <i class="fa fa-italic"></i>
+                            </span>
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a class="button">
+                            <span class="icon is-small">
+                                <i class="fa fa-underline"></i>
+                            </span>
+                        </a>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control">
+                        <span class="select">
+                            <select>
+                                <option>10</option>
+                                <option selected>12</option>
+                                <option>14</option>
+                            </select>
+                        </span>
+                    </p>
                 </div>
             </div>
+            <!--</div>
+                    </div>-->
         </ed-button-bar>
     </div>
 </template>
@@ -112,4 +114,5 @@ export default {
 </script>
 
 <style>
+
 </style>

@@ -1,14 +1,14 @@
 <template>
     <div :class="classes" :style="styles">
-        <a class="ed-delete-row delete is-large" @click="deleteRow"></a>
-        <div class="ed-row-order-buttons">
+        <a class="ed-delete-row delete is-large ed-row-buttons" @click="deleteRow"></a>
+        <div class="ed-row-order-buttons ed-row-buttons">
             <div class="ed-row-order-button ed-row-up">
-                <span class="icon is-large">
+                <span class="icon is-medium">
                     <i class="fa fa-caret-up"></i>
                 </span>
             </div>
             <div class="ed-row-order-button ed-row-down">
-                <span class="icon is-large">
+                <span class="icon is-medium">
                     <i class="fa fa-caret-down"></i>
                 </span>
             </div>
@@ -32,9 +32,9 @@ export default {
     }
   },
   props: ['rowId', 'backgroundColor', 'linearGradient', 'backgroundClass'],
-  mounted() {
-      console.log('BASE HAS ID: ' + this.rowId)
-  },
+//   mounted() {
+//       console.log('BASE HAS ID: ' + this.rowId)
+//   },
   computed: {
       classes() {
           var classObj = {
@@ -78,10 +78,13 @@ export default {
     position: relative;
 }
 
-.ed-row:not(:hover) .ed-delete-row {
+.ed-row:not(:hover) .ed-row-buttons {
     display: none;
 }
 
+.ed-row-buttons {
+    z-index: 5;
+}
 .ed-row.selected {
     box-shadow: 0px 0px 18px 3px #d2d2d2;
     z-index: 1;
@@ -104,8 +107,8 @@ export default {
 }
 .ed-row-order-buttons .ed-row-order-button {
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.8);
-    background-color: rgba(10,10,10,.3);
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(10,10,10,.2);
     border-radius: 4px;
 }
 .ed-row-order-buttons .ed-row-order-button:hover {
