@@ -29,19 +29,19 @@ namespace Vue2Spa
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services, IHostingEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             //var t = Path.Combine(env.ContentRootPath, "edion.db");
-            var t = @"d:\home\site\wwwroot\edion.db";
+            // t = @"d:\home\site\wwwroot\edion.db";
             //var connnectionString = "Data Source=" + HttpContext.Current.Server.MapPath(@"\App_Data\mydb.db")‌​
             //var conString = @"d:\home\site\wwwroot\edion.db";
-            //var conString = "edion.db";
+            var conString = "edion.db";
             // services.AddEntityFrameworkSqlite()
             //     .AddDbContext<EdionContext>((provider, options) =>
             //     {
             //         options.UseSqlite("Data Source=edion.db").UseInternalServiceProvider(provider);
             //     });
-            services.AddDbContext<EdionContext>(options => options.UseSqlite("Data Source=" + t));
+            services.AddDbContext<EdionContext>(options => options.UseSqlite("Data Source=" + conString));
 
             // Add framework services.
             services.AddMvc();
