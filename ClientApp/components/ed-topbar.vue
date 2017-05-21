@@ -1,9 +1,6 @@
 <template>
     <nav class="nav has-shadow ed-nav">
         <div class="nav-left">
-            <!--<a class="nav-item">
-                                                                                                            <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
-                                                                                                        </a>-->
             <div class="nav-item">
                 <div class="field has-addons">
                     <p class="control">
@@ -22,19 +19,6 @@
                     </p>
                 </div>
             </div>
-            <div class="nav-item">
-                <div class="field">
-                    <p class="control">
-                        <a class="button is-outlined">
-                            <span class="icon">
-                                <i class="fa fa-pencil"></i>
-                            </span>
-                            <!--<span>Styles</span>-->
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
         </div>
     
         <!-- NEW PAGE MODAL -->
@@ -59,7 +43,7 @@
                             <span class="icon">
                                 <i class="fa fa-plus-circle"></i>
                             </span>
-                            <span>New row</span>
+                            <span>Add row</span>
                         </button>
                         <transition name="fade-quick">
                             <div class="notification is-info has-arrow" v-show="hasLoadedRows && $store.getters.numberOfRows == 0 && !dismissStarterNotification" style="position: absolute; left: -120px; right: -120px; top: calc(100% + 20px);">
@@ -103,6 +87,7 @@
                             <span class="icon">
                                 <i class="fa fa-history"></i>
                             </span>
+                            <span>History</span>
                         </button>
                     </p>
                 </div>
@@ -110,14 +95,14 @@
             <div class="nav-item">
                 <div class="field has-addons">
                     <p class="control">
-                        <button class="button is-outlined">
+                        <button class="button is-outlined" disabled>
                             <span class="icon">
                                 <i class="fa fa-undo"></i>
                             </span>
                         </button>
                     </p>
                     <p class="control">
-                        <button class="button is-outlined is-disabled" disabled>
+                        <button class="button is-outlined" disabled>
                             <span class="icon">
                                 <i class="fa fa-repeat"></i>
                             </span>
@@ -130,8 +115,8 @@
                     <p class="control">
                         <a :class="{ button: true, 'is-primary': true, 'is-outlined': !canSave, 'is-loading': isSaving }" :disabled="!canSave" @click="save">
                             <!--<span class="icon">
-                                                                                        <i class="fa fa-save"></i>
-                                                                                    </span>-->
+                                                                                            <i class="fa fa-save"></i>
+                                                                                        </span>-->
                             <span>Save</span>
                         </a>
                     </p>
@@ -152,8 +137,8 @@ export default {
     components: {
         EdModal
     },
-    props: { 
-        selectedPageId: { },
+    props: {
+        selectedPageId: {},
         hasLoadedRows: { default: false }
     },
     data() {
@@ -231,9 +216,11 @@ export default {
     max-height: calc(100vh - 80px);
     font-size: 0.8rem;
 }
+
 .ed-history-window .card-content {
     padding: 0.5rem;
 }
+
 .ed-history-window .table {
     margin: 0;
 }
@@ -254,6 +241,7 @@ export default {
 
 
 
+
 /*.button.is-highlighted {
     box-shadow: 1px 1px 8px 0px rgba(97, 97, 97, 0.47)
 }*/
@@ -268,6 +256,7 @@ export default {
     opacity: 0;
     transform: translateY(3px);
 }
+
 
 
 

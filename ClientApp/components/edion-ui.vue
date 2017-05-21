@@ -4,25 +4,21 @@
       <language-tabs slot="center" />
     </ed-topbar>
     <div style="height: 52px"></div>
+
   
-    <!--<div class="notification is-info" v-if="numberOfRows == 0 && !rowsLoading && !dismissStarterNotification" style="position: absolute; left: 10px; top: 62px;">
-                                                                                      <button class="delete" @click="dismissStarterNotification = true"></button>
-                                                                                      Press the "new row" button in the top menu to add content.
-                                                                                    </div>-->
+    <div class="ed-page" :data-page-id="id" v-show="!rowsLoading">
+      <ed-row-list></ed-row-list>
   
-    <div class="ed-page" :data-page-id="id">
-  
-      <component v-for="row in $store.state.rows" :is="row.type" :rowId="row.rowId"></component>
+      <!--<component v-for="row in $store.state.rows" :is="row.type" :rowId="row.rowId"></component>-->
+      <!--<component v-for="(row, i) in sortedRows" :is="row.type" :rowId="row.rowId"></component>-->
   
     </div>
-    <div class="is-overlay" style="background-color: rgba(1, 1, 1, .5)" v-if="rowsLoading">LOADING!</div>
-  
-
+    <!--<div class="is-overlay" style="background-color: rgba(1, 1, 1, .5); position: fixed;" v-if="rowsLoading">LOADING!</div>-->
   
     <transition name="modal-fade">
       <row-picker v-show="rowPickerOpen" @ok="addNewRow" @cancel="rowPickerOpen = false"></row-picker>
     </transition>
-
+  
     <!--<ed-image-picker :show="true"></ed-image-picker>-->
   </div>
 </template>
@@ -30,20 +26,22 @@
 <script>
 import EdTopbar from 'components/ed-topbar'
 import LanguageTabs from 'components/language-tabs'
-import Rows from '../rows'
+
+//import Rows from '../rows'
+import EdRowList from 'components/ed-row-list'
 
 //import EdImagePicker from 'components/ed-image-picker'
 
-import RowSimple from 'components/rows/row-simple'
-import RowBlocks from 'components/rows/row-blocks'
-import RowHeader from 'components/rows/row-header'
-import RowImages from 'components/rows/row-images'
-import RowFooter from 'components/rows/row-footer'
-import RowBar from 'components/rows/row-bar'
+// import RowSimple from 'components/rows/row-simple'
+// import RowBlocks from 'components/rows/row-blocks'
+// import RowHeader from 'components/rows/row-header'
+// import RowImages from 'components/rows/row-images'
+// import RowFooter from 'components/rows/row-footer'
+// import RowBar from 'components/rows/row-bar'
 
 import Languages from '../languages'
 import RowPicker from 'components/row-picker'
-import EdRowBase from 'components/rows/ed-row-base'
+// import EdRowBase from 'components/rows/ed-row-base'
 
 
 export default {
@@ -51,14 +49,16 @@ export default {
   components: {
     EdTopbar,
     LanguageTabs,
-    RowSimple,
-    RowBlocks,
-    RowHeader,
-    RowImages,
-    RowFooter,
-    RowBar,
+    // RowSimple,
+    // RowBlocks,
+    // RowHeader,
+    // RowImages,
+    // RowFooter,
+    // RowBar,
     RowPicker,
-    EdRowBase,
+    // EdRowBase,
+
+    EdRowList
     //EdImagePicker
   },
   props: ['id', 'languageCode'],
@@ -74,10 +74,19 @@ export default {
   computed: {
     languageId() {
       return this.$store.state.languageId;
-    },
-    rows() {
-      return this.$store.state.rows;
     }
+    // sortedRows() {
+    //   var order = 1; // Ascending
+    //   return this.$store.state.rowArray.sort((a, b) => {
+    //     if (a.sortOrder < b.sortOrder) {
+    //       return -order;
+    //     }
+    //     if (a.sortOrder > b.sortOrder) {
+    //       return order;
+    //     }
+    //     return 0;
+    //   });
+    // }
   },
   created() {
     this.getPages();
@@ -111,20 +120,6 @@ export default {
       this.hasLoadedRows = false;
       this.$store.dispatch('FETCH_ROWS', this.id).then(() => { self.rowsLoading = false; self.hasLoadedRows = true });
     },
-    // openRowPicker: function () {
-    //   console.log('Open row picker!', this.newRowIdCounter);
-    //   var row = {
-    //     pageId: this.id,
-    //     rowId: this.newRowIdCounter,
-    //     //type: 'row-simple',
-    //     type: 'row-blocks',
-    //     fields: {},
-    //     sortOrder: this.$store.getters.numberOfRows
-    //   }
-    //   this.newRowIdCounter--;
-    //   this.$store.commit('ADD_ROW', row)
-    //   //this.$store.commit('SELECT_ROW', row.rowId);
-    // },
     deselectRow() {
       //this.$store.commit('SELECT_ROW', 0);
     }
@@ -152,5 +147,4 @@ export default {
 .modal-fade-leave-to {
   opacity: 0;
 }
-
 </style>

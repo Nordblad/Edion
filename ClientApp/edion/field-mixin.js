@@ -62,7 +62,8 @@ const fieldMixin = {
   },
   computed: {
     stateFields() {
-      var f = this.$store.state.rows[this.rowId].fields[this.fieldName];
+      var f = this.$store.state.fields[this.rowId][this.fieldName];
+      //var f = this.$store.state.rows[this.rowId].fields[this.fieldName];
       if (f) return f;
       var languages = this.translate ? [1, 2, 3] : [0];
       var defVal = (typeof this.defaultValue === 'object' ? this.getGeneratedDefaultValue(this.defaultValue) : this.defaultValue);
@@ -76,7 +77,7 @@ const fieldMixin = {
         });
       }
       console.log('INITIALIZED FIELD', this.fieldName, this.rowId);
-      return this.$store.state.rows[this.rowId].fields[this.fieldName];;
+      return this.$store.state.fields[this.rowId][this.fieldName];// this.$store.state.rows[this.rowId].fields[this.fieldName];;
     },
     languageId() {
       return this.$store.state.languageId;

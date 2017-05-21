@@ -132,6 +132,12 @@ namespace Vue2Spa.Controllers
                         f.RowId = newRow.RowId;
                     }
                 }
+                else {
+                    var resortedRow = _context.Rows.Find(row.RowId);
+                    if (resortedRow != null) {
+                        resortedRow.SortOrder = row.SortOrder;
+                    } 
+                }
             }
             foreach (var field in changes.ChangedFields)
             {

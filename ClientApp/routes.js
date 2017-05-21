@@ -1,7 +1,7 @@
-import CounterExample from 'components/counter-example'
-import FetchData from 'components/fetch-data'
+// import CounterExample from 'components/counter-example'
+// import FetchData from 'components/fetch-data'
 import HomePage from 'components/home-page'
-import EdPage from 'components/ed-page'
+// import EdPage from 'components/ed-page'
 import EdionUi from 'components/edion-ui'
 
 export const routes = [

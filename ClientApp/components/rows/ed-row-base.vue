@@ -1,6 +1,6 @@
 <template>
     <div :class="classes" :style="styles">
-        <a class="ed-delete-row delete is-large ed-row-buttons" @click="deleteRow"></a>
+        <!--<a class="ed-delete-row delete is-large ed-row-buttons" @click="deleteRow"></a>
         <div class="ed-row-order-buttons ed-row-buttons">
             <div class="ed-row-order-button ed-row-up">
                 <span class="icon is-medium">
@@ -12,7 +12,7 @@
                     <i class="fa fa-caret-down"></i>
                 </span>
             </div>
-        </div>
+        </div>-->
         <div class="container">
             <slot name="container"></slot>
         </div>
@@ -65,10 +65,10 @@ export default {
         //         console.log('Select row!' + this.rowId);
         //     }
         // },
-        deleteRow(e) {
-            console.log('DELETE?!');
-            this.$store.commit("DELETE_ROW", this.rowId);
-        }
+        // deleteRow(e) {
+        //     console.log('DELETE?!');
+        //     this.$store.commit("DELETE_ROW", this.rowId);
+        // }
     }
 }
 </script>
@@ -78,28 +78,23 @@ export default {
     position: relative;
 }
 
-.ed-row:not(:hover) .ed-row-buttons {
+/*.ed-row:not(:hover) .ed-row-buttons {
     display: none;
 }
 
 .ed-row-buttons {
     z-index: 5;
-}
+}*/
 .ed-row.selected {
     box-shadow: 0px 0px 18px 3px #d2d2d2;
     z-index: 1;
 }
 
-.ed-delete-row {
+/*.ed-delete-row {
     position: absolute;
     right: 10px;
     top: 10px;
 }
-
-/*.ed-row:not(:hover) .ed-row-order-buttons {
-    display: none;
-}*/
-
 .ed-row-order-buttons {
     position: absolute;
     left: 10px;
@@ -117,5 +112,5 @@ export default {
 }
 .ed-row-order-buttons .ed-row-order-button:not(:last-child) {
     margin-bottom: 4px;
-}
+}*/
 </style>

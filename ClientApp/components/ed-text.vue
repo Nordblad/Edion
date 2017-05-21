@@ -2,7 +2,9 @@
     <div class="ed-text">
         <!-- Add paste etc -->
         <ed-button-bar :show="showToolbar" position="below">
-            <div class="content ed-text-editor" contenteditable="true" @blur="onFocusLost" @input="setEdited" v-html="html" @focus="openToolbar"></div>
+            <transition name="language-change" mode="out-in">
+            <div class="content ed-text-editor" contenteditable="true" @blur="onFocusLost" @input="setEdited" v-html="html" :key="languageId" @focus="openToolbar"></div>
+            </transition>
             <!--<div class="field is-horizontal" slot="buttons">
                         <div class="field-body">-->
             <div class="field is-grouped" slot="buttons">
@@ -114,5 +116,18 @@ export default {
 </script>
 
 <style>
+.language-change-enter-active {
+    transition: all 0.1s ease;
+}
+
+.language-change-leave-active {
+    transition: all 0.1s ease;
+}
+
+.language-change-enter,
+.language-change-leave-to {
+    opacity: 0;
+    /*transform: translateY(-100%);*/
+}
 
 </style>
