@@ -42,8 +42,10 @@ namespace Vue2Spa.Controllers
                 return NotFound();
             }
             var rows = _context.Rows.Where(x => x.Page == page).Include(x => x.Fields);
-            var m = rows.ToDictionary(x => x.RowId, x => new RowViewModel(x));
+            var m = rows.ToList().Select(x => new RowViewModel(x)).ToList();
             return Ok(m);
+            // var m = rows.ToDictionary(x => x.RowId, x => new RowViewModel(x));
+            // return Ok(m);
         }
 
         // [HttpPost]

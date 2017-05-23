@@ -22,6 +22,17 @@ const api = {
       .catch((error) => {
         console.log(error);
       });
+  },
+  delete(url, cb) {
+    console.log('DELETE issued: ', url)
+    axios
+      .delete(url)
+      .then(response => {
+        cb(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   // getRows(pageId) {
   //   console.log('getRows api call runninng');

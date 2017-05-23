@@ -12,7 +12,8 @@ namespace Vue2Spa.Controllers
     public class PageController : Controller
     {
         private readonly EdionContext _context;
-        public PageController(EdionContext context) {
+        public PageController(EdionContext context)
+        {
             _context = context;
         }
         [HttpGet]
@@ -22,17 +23,42 @@ namespace Vue2Spa.Controllers
         }
 
         [HttpPost]
-        public object Post([FromBody]NewPageModel model) {
-            var page = new Page {
+        public object Post([FromBody]NewPageModel model)
+        {
+            var page = new Page
+            {
                 Name = model.Name,
                 Created = DateTime.Now
             };
             _context.Pages.Add(page);
             _context.SaveChanges();
-            return new {
+            return new
+            {
                 Success = true,
                 Id = page.PageId
             };
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            var page = _context.Pages.FirstOrDefault(x => x.PageId == id);
+            if (page != null)
+            {
+                var rows = _context.Rows.Where(x => x.Page == page).ToList();
+                foreach (var r in rows) {
+                    var fields = _context.Fields.Where(x => x.Row == r).ToList();
+                    foreach (var f in fields) {
+                        _context.Fields.Remove(f);
+                    }
+                    //_context.Fields.RemoveRange(r.Fields);
+                    _context.Rows.Remove(r);
+                }
+                _context.Pages.Remove(page);
+                _context.SaveChanges();
+                return Ok(_context.Pages.ToList());
+            }
+            return NotFound(new { message = "Not found" });
         }
     }
 

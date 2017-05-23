@@ -74,7 +74,7 @@ export default {
   computed: {
     languageId() {
       return this.$store.state.languageId;
-    }
+    },
     // sortedRows() {
     //   var order = 1; // Ascending
     //   return this.$store.state.rowArray.sort((a, b) => {
@@ -94,6 +94,9 @@ export default {
     this.$store.commit("CHANGE_LANGUAGE", this.$route.params.languageCode);
   },
   methods: {
+    setTitle() {
+      //var t = this.$store.state.pages
+    },
     addNewRow(type) {
       this.rowPickerOpen = false;
       console.log('ADD NEW ROW', type);
@@ -118,7 +121,7 @@ export default {
       var self = this;
       this.rowsLoading = true;
       this.hasLoadedRows = false;
-      this.$store.dispatch('FETCH_ROWS', this.id).then(() => { self.rowsLoading = false; self.hasLoadedRows = true });
+      this.$store.dispatch('FETCH_ROWS', this.id).then(() => { console.log('LADDAT!'); self.setTitle(); self.rowsLoading = false; self.hasLoadedRows = true });
     },
     deselectRow() {
       //this.$store.commit('SELECT_ROW', 0);

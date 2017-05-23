@@ -27,6 +27,13 @@ const actions = {
             state.commit('CLEAR_CHANGED');
             console.log('SAVE RESPONSE: ', data)
         });
+    },
+    DELETE_PAGE: (state, id) => {
+        console.log('Deleting page ' + id);
+        api.delete('/api/page?id=' + id, (data) => {
+            state.commit('SET_PAGES', data);
+            console.log('DELETE RESPONSE: ', data)
+        });
     }
 }
 
@@ -75,39 +82,45 @@ export default new Vuex.Store({
 
             var newRowFormat = [];
 
-            // let randomColor = () => {
-            //     var colors = ['darkred', 'darkgreen', 'lightgray', 'blue', 'teal', 'pink', 'white', '#F5F5F5', 'orangered', 'purple', 'orange', 'lightgreen'];
-            //     return colors[Math.floor(Math.random() * colors.length)];
-            // }
-            Object.keys(data).forEach((rowId, i) => {
-                //console.log('LOADED ROW ' + 1, rowId );
-                // var r = data[rowId];
-                // Vue.set(r, 'id', rowId)
-                //Vue.set(newFieldObject, rowId, r.fields || {} )
-                var row = data[rowId];
-
-                newFieldObject[rowId] = row.fields || {}
-
+            data.forEach((row, i) => {
                 newRowFormat.push({
                     pageId: row.pageId,
                     rowId: row.rowId,
                     sortOrder: row.sortOrder,
                     type: row.type
                 });
+                newFieldObject[row.rowId] = row.fields || {}
+            })
 
-                //newRowFormat.push(data[rowId]);
-            });
-            console.log('NEW ARRAY:', newRowFormat);
-            console.log('NEW FIELDS FORMAT TEST!', newFieldObject);
+            // let randomColor = () => {
+            //     var colors = ['darkred', 'darkgreen', 'lightgray', 'blue', 'teal', 'pink', 'white', '#F5F5F5', 'orangered', 'purple', 'orange', 'lightgreen'];
+            //     return colors[Math.floor(Math.random() * colors.length)];
+            // }
+            // Object.keys(data).forEach((rowId, i) => {
+            //     //console.log('LOADED ROW ' + 1, rowId );
+            //     // var r = data[rowId];
+            //     // Vue.set(r, 'id', rowId)
+            //     //Vue.set(newFieldObject, rowId, r.fields || {} )
+            //     var row = data[rowId];
+
+            //     newFieldObject[rowId] = row.fields || {}
+
+            //     newRowFormat.push({
+            //         pageId: row.pageId,
+            //         rowId: row.rowId,
+            //         sortOrder: row.sortOrder,
+            //         type: row.type
+            //     });
+
+            //     //newRowFormat.push(data[rowId]);
+            // });
+
+            // console.log('NEW ARRAY:', newRowFormat);
+            // console.log('NEW FIELDS FORMAT TEST!', newFieldObject);
             state.rowArray = newRowFormat;
             state.fields = newFieldObject;
             console.log('STORE: rows updated', data);
         },
-
-        // increment(state, thing) {
-        //     // mutate state
-        //     state.changes.push(thing);
-        // },
         ADD_ROW: (state, data) => {
             console.log('STORE: add_row:', data);
             state.history.push({
@@ -132,7 +145,7 @@ export default new Vuex.Store({
                     delete: true
                 });
             }
-            
+
             state.rowArray = state.rowArray.filter(function (item) {
                 return item.rowId != rowId;
             });

@@ -15,9 +15,9 @@
                     <slot></slot>
                 </section>
                 <slot v-else></slot>-->
-            <footer class="modal-card-foot" v-if="card">
-                <a class="button is-success" @click="ok">{{ okButton }}</a>
+            <footer class="modal-card-foot" v-if="card" style="justify-content: flex-end;">
                 <a class="button is-outline" @click="cancel">{{ cancelButton }}</a>
+                <a :class="['button', okButtonClass]" @click="ok">{{ okButton }}</a>
             </footer>
         </div>
     </div>
@@ -40,6 +40,9 @@ export default {
       },
       card: {
           default: true
+      },
+      okButtonClass: {
+          default: 'is-success'
       }
   },
   data () {

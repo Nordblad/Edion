@@ -19,7 +19,26 @@
                     </p>
                 </div>
             </div>
+            <div class="nav-item">
+                <div class="field">
+                    <p class="control">
+                        <button class="button is-outlined" @click="openDeleteConfirmation">DELETE</button>
+                    </p>
+                </div>
+            </div>
         </div>
+
+        <ed-modal v-if="showDeletePageModal" @ok="deletePage" @cancel="showDeletePageModal = false" okButton="Delete" okButtonClass="is-danger" title="Delete page">
+            <!--<div class="field">
+                <label class="label">Page name</label>
+                <p class="control">
+                    <input class="input" type="text" v-model="newPageName">
+                </p>
+            </div>-->
+            <div class="notification is-danger">
+                Delete page {{ selectedPageId }}: "{{ $store.state.pages.find(x => x.pageId == selectedPageId).name }}"?"
+            </div>
+        </ed-modal>
     
         <!-- NEW PAGE MODAL -->
         <ed-modal v-if="pageModalOpen" @ok="createPage" @cancel="pageModalOpen = false" okButton="Create page" title="New page">
@@ -150,7 +169,8 @@ export default {
             select: null,
             isSaving: false,
             showHistoryWindow: false,
-            dismissStarterNotification: false
+            dismissStarterNotification: false,
+            showDeletePageModal: false
         }
     },
     computed: {
@@ -184,6 +204,19 @@ export default {
             // var fields = this.$store.state.changedFields;
             // console.log('SAVE VM:', { changes: { rows: rows, fields: fields }})
             this.$store.dispatch('SAVE', { changedRows: this.$store.state.changedRows, changedFields: this.$store.state.changedFields }).then(() => self.isSaving = false);
+        },
+        openDeleteConfirmation: function() {
+            this.showDeletePageModal = true;
+            console.log('DELETE PAGE ' + this.$route.params.id);
+        },
+        deletePage: function() {
+            this.showDeletePageModal = false;
+            this.$store.dispatch('DELETE_PAGE', this.$route.params.id).then(() => {
+                //console.log('PAGES ARE NOW: ', this.$store.state.pages);
+                var redirectTo = this.$store.state.pages[0].pageId;
+                // Nullcheck obv..
+                this.$router.push({ name: 'page', params: { id: redirectTo, languageCode: this.$route.params.languageCode } })
+            });
         }
     }
 }
@@ -197,6 +230,7 @@ export default {
     left: 0;
     top: 0;
     right: 0;
+    z-index: 1500;
 }
 
 .card.has-arrow::before {
